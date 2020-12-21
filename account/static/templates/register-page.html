@@ -106,7 +106,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="card card-signup" data-background-color="orange">
-					<form class="form" method="" action="">
+					<form class="form" method="POST" action="">
+                    {% csrf_token %}
 						<div class="card-header text-center">
 							<h3 class="card-title title-up">Cadastrar</h3>
 						</div>
@@ -117,7 +118,7 @@
                                         <i class="now-ui-icons users_circle-08"></i>
                                     </span>
 								</div>
-								<input type="text" class="form-control" placeholder="Nome...">
+                                {{ form.first_name }}
 							</div>
 
 							<div class="input-group no-border">
@@ -126,7 +127,7 @@
                                         <i class="now-ui-icons text_caps-small"></i>
                                     </span>
 								</div>
-								<input type="text" placeholder="Sobrenome..." class="form-control">
+                                {{ form.last_name }}
 							</div>
 
 							<div class="input-group no-border">
@@ -134,21 +135,30 @@
                                     <span class="input-group-text">
                                         <i class="now-ui-icons ui-1_email-85"></i>
                                     </span>
-							</div>
-								<input type="text" class="form-control" placeholder="Email...">
+							    </div>
+                                {{ form.email }}
 							</div>
 
-                            							<div class="input-group no-border">
+                            <div class="input-group no-border">
 								<div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="now-ui-icons objects_key-25"></i>
                                     </span>
+							    </div>
+                                {{ form.password1 }}
 							</div>
-								<input type="password" class="form-control" placeholder="Senha...">
+
+							<div class="input-group no-border">
+								<div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="now-ui-icons objects_key-25"></i>
+                                    </span>
+								</div>
+                                {{ form.password2 }}
 							</div>
 						</div>
 						<div class="card-footer text-center">
-							<a href="#pablo" class="btn btn-neutral btn-round btn-lg">Confirmar</a>
+							<button type="submit" class="btn btn-neutral btn-round btn-lg">Confirmar</a>
 						</div>
 					</form>
 				</div>
