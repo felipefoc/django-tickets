@@ -1,6 +1,8 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
+from django.forms import ModelForm, PasswordInput
 from django.contrib.auth import forms
 from .models import Account
+
 
 class UserChangeForm(forms.UserChangeForm):
     class Meta(forms.UserChangeForm.Meta):
@@ -34,3 +36,15 @@ class UserCreationForm(forms.UserCreationForm):
         self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Senha...'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Confirmação de senha...'})
 
+
+class LoginForm(ModelForm):
+    '''Simple login form'''
+    class Meta:
+        model = Account
+        fields = ('email', 'password')
+
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Email...'})
+        self.fields['password'].widget = PasswordInput(attrs={'class': 'form-control', 'placeholder':'Senha...'})
+       

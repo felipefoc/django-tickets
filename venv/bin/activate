@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/focky/Desktop/Projetos/django-tickets/venv"
+VIRTUAL_ENV="/home/dev/Projetos/django-tickets/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
