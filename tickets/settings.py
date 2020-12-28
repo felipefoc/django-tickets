@@ -132,3 +132,13 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_URL = ['login']
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert alert-primary',
+    messages.INFO: 'alert alert-info',
+    messages.SUCCESS: 'alert alert-success',
+    messages.WARNING: 'alert alert-warning',
+    messages.ERROR: 'alert alert-danger'
+}

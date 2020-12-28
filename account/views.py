@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from .forms import UserCreationForm, LoginForm
 
 
@@ -18,7 +19,9 @@ def loginPage(request):
         if user is not None and user.is_active:
             login(request, user)
             return redirect('home', username=user.first_name)
-            
+
+        else:
+            messages.error(request, 'Nome de usuário e/ou senha incorreto')           
     context = {'form': form }
     return render(request, 'templates/login-page.html', context)
 
