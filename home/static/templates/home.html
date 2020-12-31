@@ -1,0 +1,68 @@
+{% extends 'templates/base.html' %}
+
+{% block title %}
+{{ user.first_name }} | Página Inicial
+{% endblock %}
+
+{% block css %}
+.card-header {
+    background-color: red;
+    width: 100%;
+
+  }
+  .card-header > .a {
+    color: purple;
+  }
+{% endblock css %}
+
+
+{% block content %}
+<div id="accordion" role="tablist" aria-multiselectable="true" class="card-collapse">
+    <div class="card card-plain">
+      <div class="card-header" role="tab" id="headingOne">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Tickets em aberto
+
+        <i class="now-ui-icons arrows-1_minimal-down"></i>
+          </a>
+      </div>
+
+      <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+        <div class="card-body">
+          {% include 'templates/table_open.html' %}
+        </div>
+      </div>
+    </div>
+    <div class="card card-plain">
+      <div class="card-header" role="tab" id="headingTwo">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Tickets fechados
+
+          <i class="now-ui-icons arrows-1_minimal-down"></i>
+          </a>
+      </div>
+      <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="card-body">
+          {% include 'templates/table_closed.html' %}
+        </div>
+      </div>
+    </div>
+    <div class="card card-plain">
+      <div class="card-header" role="tab" id="headingThree">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Tickets em andamento
+
+        <i class="now-ui-icons arrows-1_minimal-down"></i>
+        </a>
+      </div>
+      <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+        <div class="card-body">
+          {% include 'templates/table_outdated.html' %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+
+<!-- Falta fazer adasdsad -->
