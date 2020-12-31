@@ -4,6 +4,21 @@
 {{ user.first_name }} | Novo Ticket
 {% endblock %}
 
+{% block css %}
+textarea.form-control {
+    max-height: 150px;
+}
+label {
+    color: black;
+    font-weight: bolder;
+}
+{% endblock css %}
 {% block content %}
-{{form}}
+<div class="card">
+    <div class="card-body">
+        {{form.as_p}}
+        <button type="submit" class="btn btn-danger btn-round">Criar Ticket</button>
+    </div>
+    
+</div>
 {% endblock content %}

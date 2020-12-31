@@ -34,5 +34,6 @@ class Tickets(models.Model):
     status = models.CharField(max_length=30, choices=CHOICES, null=True)
     descrição = models.TextField(null=True)
     finalizado_em = models.DateTimeField(auto_now_add=True)
+    imagem = models.ImageField(upload_to='uploads/', null=True)
 
     

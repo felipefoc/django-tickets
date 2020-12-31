@@ -142,3 +142,5 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert alert-warning',
     messages.ERROR: 'alert alert-danger'
 }
+
+MEDIA_ROOT = '/static/media'
