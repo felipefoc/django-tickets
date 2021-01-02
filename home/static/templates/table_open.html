@@ -1,18 +1,36 @@
 <table class="table table-bordered" style="background-color:white;">
   <thead>
     <tr>
-      <th scope="col">ID</th>
       <th scope="col">Tipo</th>
       <th scope="col">Setor</th>
       <th scope="col">Data</th>
+      <th scope="col">Status</th>
+      <th scope="col">Ações</th>
     </tr>
   </thead>
   <tbody>
+    {% for formopen in form %}
     <tr>
-      <th scope="row">1</th>
-      <td>Manutenção</td>
-      <td>Comercial 2</td>
-      <td>06/03/1994</td>
+      <td>{{formopen.tipo}}</td>
+      <td>{{formopen.setor}}</td>
+      <td>{{formopen.criado_em}}</td>
+      <td><span class="badge badge-primary">{{formopen.status}}</span></td>
+      <td>
+        <div id=icons>
+          <span data-toggle="modal" data-target="#modalv">
+          <a href="#" data-toggle="tooltip" title="Visualizar Ticket">
+        <i class="fas fa-eye fa-lg">
+          </i></a></span>
+          <a href="{% url 'deleteticket' id=formopen.id %}" data-toggle="tooltip" title="Excluir Ticket">
+        <i class="fas fa-window-close fa-lg">
+          </i></a>
+          <a href="{% url 'editticket' id=formopen.id %}" data-toggle="tooltip" title="Editar Ticket">
+        <i class="fas fa-edit fa-lg">
+          </i></a>
+        </div>
+      </td>
     </tr>
+    {% include 'templates/modal.html' %}
+    {% endfor %}
   </tbody>
 </table>

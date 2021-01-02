@@ -12,13 +12,76 @@ label {
     color: black;
     font-weight: bolder;
 }
+.errorlist {
+    color: black;
+}
+
+.custom-file-input {
+  color: transparent;
+  opacity: 1;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: 'Anexar arquivo';
+  color: black;
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active {
+  outline: 0;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
 {% endblock css %}
 {% block content %}
+
 <div class="card">
     <div class="card-body">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         {{form.as_p}}
         <button type="submit" class="btn btn-danger btn-round">Criar Ticket</button>
+        </form>
     </div>
-    
 </div>
 {% endblock content %}
+
+{% block script %}
+
+<script>
+  function fireSweet(){
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Novo ticket criado.. ',
+        text: 'Agora é só aguardar a solução do seu ticket',
+        showConfirmButton: false,
+        timer: 3000
+      })
+  }
+
+  $(document).ready(function(){
+    $('form').on("submit",function(){
+        fireSweet();
+    });
+});
+</script>
+
+{% endblock script %}
