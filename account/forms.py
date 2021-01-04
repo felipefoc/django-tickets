@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
 from django.forms import ModelForm, PasswordInput
 from django.contrib.auth import forms
+from django import forms as fforms
 from .models import Account
 
 
@@ -43,8 +44,11 @@ class LoginForm(ModelForm):
         model = Account
         fields = ('email', 'password')
 
+
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Email...'})
         self.fields['password'].widget = PasswordInput(attrs={'class': 'form-control', 'placeholder':'Senha...'})
-       
+
+
+

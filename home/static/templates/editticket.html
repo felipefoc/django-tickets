@@ -1,7 +1,7 @@
 {% extends 'templates/base.html' %}
 
 {% block title %}
-{{ user.first_name }} | Novo Ticket
+{{ user.first_name }} | Editar Ticket
 {% endblock %}
 
 {% block css %}
@@ -57,7 +57,7 @@ label {
       <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="button" id="form" class="btn btn-danger btn-round">Criar Ticket</button>
+        <button type="button" id="form" class="btn btn-danger btn-round">Editar Ticket</button>
         </form>
     </div>
 </div>
@@ -70,8 +70,8 @@ label {
     Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: 'Novo ticket criado.. ',
-        text: 'Agora é só aguardar a solução do seu ticket',
+        title: 'Seu ticket foi editado.. ',
+        text: '',
         showConfirmButton: false,
         timer: 3000
       })

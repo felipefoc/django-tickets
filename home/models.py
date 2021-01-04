@@ -34,7 +34,7 @@ class Tickets(models.Model):
     tipo = models.ForeignKey(TipoTicket, null=True, on_delete=models.CASCADE)
     setor = models.ForeignKey(SetorTicket, null=True, on_delete=models.CASCADE)
     criado_em = models.DateTimeField(auto_now=True)
-    criado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    criado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=30, choices=CHOICES, default='Pendente')
     descrição = models.TextField(null=True)
     finalizado_em = models.DateTimeField(auto_now_add=True)

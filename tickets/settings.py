@@ -127,11 +127,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    os.path.join(BASE_DIR, 'static/'),
     '/var/www/static/',
+
 ]
 
-LOGIN_URL = ['login']
+LOGIN_URL = '/login/'
 
 from django.contrib.messages import constants as messages
 
@@ -143,4 +144,4 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert alert-danger'
 }
 
-MEDIA_ROOT = '/static/media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/uploads')
