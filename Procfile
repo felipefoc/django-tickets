@@ -1,1 +1,1 @@
-web: gunicorn django-tickets.wsgi
+web: gunicorn tickets.wsgi
