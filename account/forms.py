@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, SetPasswordForm
 from django.forms import ModelForm, PasswordInput
 from django.contrib.auth import forms
 from django import forms as fforms
@@ -52,3 +52,13 @@ class LoginForm(ModelForm):
 
 
 
+class SetPasswordForm(forms.SetPasswordForm):
+    class Meta(forms.SetPasswordForm):
+        model = Account
+
+    def __init__(self, *args, **kwargs):
+        super(SetPasswordForm, self).__init__(*args, **kwargs)
+        self.fields['new_password1'].widget.attrs.update({'class': 'form-control', 'placeholder': '...'})
+        self.fields['new_password2'].widget.attrs.update({'class': 'form-control', 'pĺaceholder': '...'})
+
+    

@@ -7,15 +7,16 @@ from django.conf import settings
 import random, string
 
 
+
 # Create your views here.
 @login_required
 def homePage(request, username):
     '''
     A homepage deve contêr todos tickets ativos do usuário e só.. manter o mais "clean" possível. 
     '''
-    formopen = Tickets.objects.filter(criado_por=request.user, is_active=True, status='Pendente') # Tickets em aberto
-    formclosed = Tickets.objects.filter(criado_por=request.user, is_active=True, status='Finalizado') # Tickets finalizados
-    formstarted = Tickets.objects.filter(criado_por=request.user, is_active=True, status='Em andamento') # Tickets em andamento
+    formopen = Tickets.objects.filter(criado_por=request.user, is_active=True, status='Pendente').order_by('-criado_em') # Tickets em aberto
+    formclosed = Tickets.objects.filter(criado_por=request.user, is_active=True, status='Finalizado').order_by('-criado_em') # Tickets finalizados
+    formstarted = Tickets.objects.filter(criado_por=request.user, is_active=True, status='Em andamento').order_by('-criado_em') # Tickets em andamento
     context = {'user' : request.user,
                'formopen': formopen,
                'formclosed': formclosed,

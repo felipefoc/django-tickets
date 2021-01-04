@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout as django_logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import SetPasswordForm
 from django.contrib import messages
-from .forms import UserCreationForm, LoginForm
+from .forms import UserCreationForm, LoginForm, SetPasswordForm
 
 
 # Create your views here.
