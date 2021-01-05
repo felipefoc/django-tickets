@@ -35,3 +35,13 @@ class EditTicket(forms.ModelForm):
         self.fields['imagem'].widget.attrs.update({'class': 'custom-file-input', 'multiple': True})
         self.fields['imagem'].label = "Anexar arquivos"
 
+
+class TicketForm(forms.ModelForm):
+    class Meta:
+        model = Tickets
+        fields = '__all__'
+
+
+    def __init__(self, *args, **kwargs):
+        super(TicketForm, self).__init__(*args, **kwargs)
+        

@@ -25,7 +25,7 @@
       <td>
         <div id="icons">
           <span data-toggle="modal" data-target="#modalv">
-          <a href="#" data-toggle="tooltip" title="Visualizar Ticket">
+          <a href="{% url 'ticket' id=form.id username=user.first_name %}" data-toggle="tooltip" title="Visualizar Ticket">
         <i class="fas fa-eye fa-lg">
           </i></a></span>
           <a href="{% url 'deleteticket' id=form.id %}" data-toggle="tooltip" title="Excluir Ticket">
