@@ -11,7 +11,7 @@ function fireSweet(){
 
 $(document).ready(function(){
   let form = $('#buttonform');
-    form.on("click",function(){
+    form.on("click",function(){       
         if ( validate() === true ){
             fireSweet();
             setTimeout( function () { 
