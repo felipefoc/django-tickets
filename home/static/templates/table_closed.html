@@ -1,4 +1,4 @@
-<table class="table table-bordered" style="background-color:white;">
+<table class="table table-bordered" style="background-color: white">
   <thead>
     <tr>
       <th scope="col">Tipo</th>
@@ -9,26 +9,25 @@
     </tr>
   </thead>
   <tbody>
-  {% if formclosed|length == 0 %}
-  <tr>
-  
-    <td colspan="10">
-      <strong>Você não possui tickets em fechados.</strong>
-  {% endif %}
-    </td>
-    {% for form in formclosed %}
+    {% for ticket in tickets %} {% if ticket.status == 'Finalizado' %}
     <tr>
-      <td>{{form.tipo}}</td>
-      <td>{{form.setor}}</td>
-      <td>{{form.criado_em}}</td>
-      <td><span class="badge badge-default">{{form.status}}</span></td>
+      <td>{{ticket.tipo}}</td>
+      <td>{{ticket.setor}}</td>
+      <td>{{ticket.criado_em}}</td>
+      <td><span class="badge badge-default">{{ticket.status}}</span></td>
       <td>
         <div id="icons">
-          <span data-toggle="modal" data-target="#modalv">
-          <a href="#" data-toggle="tooltip" title="Visualizar Ticket">
-        <i class="fas fa-eye fa-lg">
-          </i></a></span>
+            <a href="{% url 'ticket' id=ticket.id username=user.first_name %}" data-toggle="tooltip" title="Visualizar Ticket">
+          <i class="fas fa-eye fa-lg">
+            </i></a>
         </div>
+      </td>
+    </tr>
+    {% endif %} 
+    {% empty %}
+    <tr>
+      <td colspan="10">
+        <strong>Você não possui tickets fechados.</strong>
       </td>
     </tr>
     {% endfor %}

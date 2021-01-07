@@ -64,6 +64,11 @@
     <div class="form-inline ml-auto" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
+        <a class="nav-link " href="{% url 'home' username=user.first_name %}" id="navbarDropdownMenuLink">
+          Página Inicial
+        </a>
+        </li>
+        <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Meus Tickets
           </a>

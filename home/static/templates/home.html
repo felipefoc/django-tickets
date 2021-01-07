@@ -46,28 +46,28 @@ p {
     <div class="card card-plain">
       <div class="card-header" role="tab" id="headingTwo">
       <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Tickets fechados
+          Tickets em andamento
 
           <i class="now-ui-icons arrows-1_minimal-down"></i>
           </a>
       </div>
       <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
         <div class="card-body">
-          {% include 'templates/table_closed.html' %}
+          {% include 'templates/table_outdated.html' %}          
         </div>
       </div>
     </div>
     <div class="card card-plain">
       <div class="card-header" role="tab" id="headingThree">
       <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-        Tickets em andamento
+        Tickets fechados
 
         <i class="now-ui-icons arrows-1_minimal-down"></i>
         </a>
       </div>
       <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
         <div class="card-body">
-          {% include 'templates/table_outdated.html' %}
+          {% include 'templates/table_closed.html' %}
         </div>
       </div>
     </div>

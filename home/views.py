@@ -12,15 +12,11 @@ import random, string
 @login_required
 def homePage(request, username):
     '''
-    A homepage deve contêr todos tickets ativos do usuário e só.. manter o mais "clean" possível. 
+    A homepage deve conter todos tickets ativos do usuário e só.. manter o mais "clean" possível. 
     '''
-    formopen = Tickets.objects.filter(criado_por=request.user, is_active=True, status='Pendente').order_by('-criado_em') # Tickets em aberto
-    formclosed = Tickets.objects.filter(criado_por=request.user, is_active=True, status='Finalizado').order_by('-criado_em') # Tickets finalizados
-    formstarted = Tickets.objects.filter(criado_por=request.user, is_active=True, status='Em andamento').order_by('-criado_em') # Tickets em andamento
+    tickets = Tickets.objects.filter(criado_por=request.user, is_active=True).order_by('-criado_em') # Tickets em aberto
     context = {'user' : request.user,
-               'formopen': formopen,
-               'formclosed': formclosed,
-               'formstarted' :formstarted }
+               'tickets': tickets }
     return render(request, 'templates/home.html', context)
 
 
@@ -41,6 +37,7 @@ def novoTicket(request, username):
     context = {'user' : request.user,
                 'form' : form }
     return render(request, 'templates/novoticket.html', context)
+
 
 ## Tickets Api's ##
 @login_required
@@ -81,6 +78,5 @@ def editTicket(request, id):
 
 def verTicket(request, username, id):
     ticket = Tickets.objects.filter(id=id).first()
-    form = TicketForm(instance=ticket)
-    context = {'form': form}
+    context = {'ticket': ticket }
     return render(request, 'templates/verticket.html', context)

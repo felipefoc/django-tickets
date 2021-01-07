@@ -5,17 +5,32 @@ Ticket | Visualizar
 {% endblock title %}
 
 {% block css %}
-p {
+div {
     color: black;
 }
 {% endblock css %}
 
 {% block content %}
 <div class="card">
+ <ul class="list-group list-group-flush">
+    <li class="list-group-item"><em>Ticket criado em:</em><br><strong>  {{ticket.criado_em}}</strong></li>
+    <li class="list-group-item"><em> Aberto por:</em><strong> {# ticket.operador #}Nome do Operador </strong> em <strong>{# data abertura operador #}</strong> 5 de Janeiro de 2020.</li>
+    <li class="list-group-item">Setor: {{ticket.setor}} <br >Tipo: {{ticket.tipo}}</strong></li>
+    <br>
+    <br>
+    <li class="list-group-item">Problema relatado : <br>{{ticket.descrição}}</strong></li>
+    <lu class="list-group-item"><img src="{{ticket.imagem}}">
+    <li class="list-group-item">Status : <span class="badge badge-primary">{{ticket.status}}</span></li>
+  </ul>
   <div class="card-body">
-    <div id="header">
-        Nome pessoa
-    </div>
+    Ações <br>
+    <a href="{% url 'deleteticket' id=ticket.id %}" data-toggle="tooltip" title="Excluir Ticket">
+          <i class="fas fa-window-close fa-lg">
+    </i></a>
+    <a href="{% url 'editticket' id=ticket.id %}" data-toggle="tooltip" title="Editar Ticket">
+          <i class="fas fa-edit fa-lg">
+    </i></a>
+
   </div>
 </div>
 {% endblock content %}
