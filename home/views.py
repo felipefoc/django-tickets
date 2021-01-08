@@ -14,7 +14,7 @@ def homePage(request, username):
     '''
     A homepage deve conter todos tickets ativos do usuário e só.. manter o mais "clean" possível. 
     '''
-    tickets = Tickets.objects.filter(criado_por=request.user, is_active=True).order_by('-criado_em') # Tickets em aberto
+    tickets = Tickets.objects.filter(created_by=request.user, is_active=True).order_by('-created_at') # Tickets em aberto
     context = {'user' : request.user,
                'tickets': tickets }
     return render(request, 'templates/home.html', context)
@@ -26,9 +26,9 @@ def novoTicket(request, username):
         form = NewTicket(request.POST, request.FILES)
         if form.is_valid():
             new_form = form.save(commit=False)
-            new_form.criado_por = request.user
+            new_form.created_by = request.user
             filename = ''.join(random.choice(string.ascii_letters) for _ in range(5)) 
-            new_form.imagem.field.upload_to = f'user_{request.user.id}/{filename}'
+            new_form.image.field.upload_to = f'user_{request.user.id}/{filename}'
             new_form.save()
             return redirect('home', username=request.user.first_name )
     else:
@@ -47,7 +47,7 @@ def deleteTicket(request, id):
     '''
     try:
         ticket = Tickets.objects.filter(id=id).first()
-        if ticket.criado_por == request.user:
+        if ticket.created_by == request.user:
             ticket.is_active = False
             ticket.save()
         return redirect('home', username=request.user.first_name )
@@ -67,7 +67,7 @@ def editTicket(request, id):
         if form.is_valid():
             new_form = form.save(commit=False)
             filename = ''.join(random.choice(string.ascii_letters) for _ in range(5))
-            new_form.imagem.field.upload_to = f'user_{request.user.id}/{filename}'
+            #new_form.image.field.upload_to = f'user_{request.user.id}/{filename}'
             new_form.save()
             return redirect('home', username=request.user.first_name )
 

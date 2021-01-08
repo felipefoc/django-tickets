@@ -3,21 +3,21 @@ from account.models import Account
 from django.conf import settings
 
 # Create your models here.
-class TipoTicket(models.Model):
-    nome = models.CharField(max_length=30)
+class TicketType(models.Model):
+    name = models.CharField(max_length=30)
     status = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.nome
+        return self.name
 
 
 
-class SetorTicket(models.Model):
-    nome = models.CharField(max_length=30)
+class SectorType(models.Model):
+    name = models.CharField(max_length=30)
     status = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.nome
+        return self.name
 
 
 class Tickets(models.Model):
@@ -31,13 +31,16 @@ class Tickets(models.Model):
         ('Pendente', 'Pendente'),
         )
 
-    tipo = models.ForeignKey(TipoTicket, null=True, on_delete=models.CASCADE)
-    setor = models.ForeignKey(SetorTicket, null=True, on_delete=models.CASCADE)
-    criado_em = models.DateTimeField(auto_now=True)
-    criado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-    status = models.CharField(max_length=30, choices=CHOICES, default='Pendente')
-    descrição = models.TextField(null=True)
-    finalizado_em = models.DateTimeField(auto_now_add=True)
-    imagem = models.FileField(upload_to=user_directory_path , max_length=5000,
-    null=True, blank=True)
+    _type = models.ForeignKey(TicketType, null=True, on_delete=models.CASCADE)
+    sector = models.ForeignKey(SectorType, null=True, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    modified_date = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=30, choices=CHOICES, default='Pendente', blank=False, null=False)
+    description = models.TextField(null=True)
+    operator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                                null=True, related_name='operator')
+    ended_in = models.DateTimeField()
+    files = models.FileField(upload_to=user_directory_path , max_length=5000,
+                             null=True, blank=True)
     is_active = models.BooleanField(default=True)
