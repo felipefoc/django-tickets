@@ -10,10 +10,13 @@ class NewTicket(forms.ModelForm):
             super(NewTicket, self).__init__(*args, **kwargs)
             self.fields['_type'].widget.attrs.update({'class': 'form-control',
             'placeholder': '...'})
+            self.fields['_type'].label = 'Tipo'
             self.fields['sector'].widget.attrs.update({'class': 'form-control',
             'placeholder': '...'})
+            self.fields['sector'].label = 'Setor'
             self.fields['description'].widget.attrs.update({'class': 'form-control',
              'placeholder': 'Qual o assunto do seu ticket ?', 'rows':'5',})
+            self.fields['description'].label = 'Descrição'
             self.fields['files'].widget.attrs.update({'class': 'custom-files-input', 'multiple': True})
             self.fields['files'].label = "Anexar arquivos"
 
@@ -28,10 +31,13 @@ class EditTicket(forms.ModelForm):
         super(EditTicket, self).__init__(*args, **kwargs)
         self.fields['_type'].widget.attrs.update({'class': 'form-control',
             'placeholder': '...'})
+        self.fields['_type'].label = 'Tipo'
         self.fields['sector'].widget.attrs.update({'class': 'form-control',
             'placeholder': '...'})
+        self.fields['sector'].label = 'Setor'
         self.fields['description'].widget.attrs.update({'class': 'form-control',
-             'placeholder': 'Qual o assunto do seu ticket ?', 'rows':'5',})
+            'placeholder': 'Qual o assunto do seu ticket ?', 'rows':'5',})
+        self.fields['description'].label = 'Descrição'    
         self.fields['files'].widget.attrs.update({'class': 'custom-files-input', 'multiple': True})
         self.fields['files'].label = "Anexar arquivos"
 
