@@ -31,7 +31,7 @@ class Tickets(models.Model):
         ('Pendente', 'Pendente'),
         )
 
-    _type = models.ForeignKey(TicketType, null=True, on_delete=models.CASCADE)
+    sort = models.ForeignKey(TicketType, null=True, on_delete=models.CASCADE)
     sector = models.ForeignKey(SectorType, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
@@ -40,7 +40,7 @@ class Tickets(models.Model):
     description = models.TextField(null=True)
     operator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                                 null=True, related_name='operator')
-    ended_in = models.DateTimeField()
+    ended_in = models.DateTimeField(null=True)
     files = models.FileField(upload_to=user_directory_path , max_length=5000,
                              null=True, blank=True)
     is_active = models.BooleanField(default=True)

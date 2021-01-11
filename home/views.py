@@ -28,7 +28,7 @@ def novoTicket(request, username):
             new_form = form.save(commit=False)
             new_form.created_by = request.user
             filename = ''.join(random.choice(string.ascii_letters) for _ in range(5)) 
-            new_form.image.field.upload_to = f'user_{request.user.id}/{filename}'
+            new_form.files.field.upload_to = f'user_{request.user.id}/{filename}'
             new_form.save()
             return redirect('home', username=request.user.first_name )
     else:
@@ -76,7 +76,7 @@ def editTicket(request, id):
     return render(request, 'templates/editticket.html', context)
 
 
-def verTicket(request, username, id):
+def verTicket(request, id):
     ticket = Tickets.objects.filter(id=id).first()
     context = {'ticket': ticket }
     return render(request, 'templates/verticket.html', context)

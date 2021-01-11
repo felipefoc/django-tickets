@@ -4,13 +4,13 @@ from .models import Tickets
 class NewTicket(forms.ModelForm):
     class Meta:
         model = Tickets
-        fields = ['_type', 'sector', 'description', 'files']
+        fields = ['sort', 'sector', 'description', 'files']
 
     def __init__(self, *args, **kwargs):
             super(NewTicket, self).__init__(*args, **kwargs)
-            self.fields['_type'].widget.attrs.update({'class': 'form-control',
+            self.fields['sort'].widget.attrs.update({'class': 'form-control',
             'placeholder': '...'})
-            self.fields['_type'].label = 'Tipo'
+            self.fields['sort'].label = 'Tipo'
             self.fields['sector'].widget.attrs.update({'class': 'form-control',
             'placeholder': '...'})
             self.fields['sector'].label = 'Setor'
@@ -29,9 +29,9 @@ class EditTicket(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EditTicket, self).__init__(*args, **kwargs)
-        self.fields['_type'].widget.attrs.update({'class': 'form-control',
+        self.fields['sort'].widget.attrs.update({'class': 'form-control',
             'placeholder': '...'})
-        self.fields['_type'].label = 'Tipo'
+        self.fields['sort'].label = 'Tipo'
         self.fields['sector'].widget.attrs.update({'class': 'form-control',
             'placeholder': '...'})
         self.fields['sector'].label = 'Setor'

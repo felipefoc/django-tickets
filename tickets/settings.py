@@ -145,6 +145,8 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert alert-danger'
 }
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/uploads')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
 
 django_heroku.settings(locals())

@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
@@ -6,5 +8,5 @@ urlpatterns = [
     path('<str:username>/novoticket', views.novoTicket, name='novoTicket'),
     path('DeleteTicket/<int:id>', views.deleteTicket, name='deleteticket'),
     path('EditTicket/<int:id>', views.editTicket, name='editticket'),
-    path('<str:username>/Ticket<int:id>', views.verTicket, name='ticket'),
-]
+    path('Ticket<int:id>', views.verTicket, name='ticket'),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -12,13 +12,13 @@
     {% for ticket in tickets %}
       {% if ticket.status == 'Pendente' %}
       <tr>
-        <td>{{ticket.tipo}}</td>
-        <td>{{ticket.setor}}</td>
-        <td>{{ticket.criado_em}}</td>
+        <td>{{ticket.sort}}</td>
+        <td>{{ticket.sector}}</td>
+        <td>{{ticket.created_at}}</td>
         <td><span class="badge badge-primary">{{ticket.status}}</span></td>
         <td>
           <div id="icons">
-            <a href="{% url 'ticket' id=ticket.id username=user.first_name %}" data-toggle="tooltip" title="Visualizar Ticket">
+            <a href="{% url 'ticket' id=ticket.id %}" data-toggle="tooltip" title="Visualizar Ticket">
           <i class="fas fa-eye fa-lg">
             </i></a>
             <a href="{% url 'deleteticket' id=ticket.id %}" data-toggle="tooltip" title="Excluir Ticket">

@@ -1,4 +1,5 @@
 {% extends 'templates/base.html' %}
+{% load static %}
 
 {% block title %} 
 Ticket | Visualizar 
@@ -7,6 +8,12 @@ Ticket | Visualizar
 {% block css %}
 div {
     color: black;
+}
+textarea {
+  resize: none;
+}
+#file {
+  width: 250px;
 }
 {% endblock css %}
 
@@ -18,8 +25,10 @@ div {
     <li class="list-group-item">Setor: {{ticket.setor}} <br >Tipo: {{ticket.tipo}}</strong></li>
     <br>
     <br>
-    <li class="list-group-item">Problema relatado : <br>{{ticket.descrição}}</strong></li>
-    <lu class="list-group-item"><img src="{{ticket.imagem}}">
+    <li class="list-group-item">Problema relatado : <br>
+      <textarea rows="20" cols="100%" disabled>
+      {{ticket.created_by.first_name}}: <br> \n{{ticket.description}}</textarea></li>
+    <lu class="list-group-item"><img id="file" src="media/{{ticket.files}}">
     <li class="list-group-item">Status : <span class="badge badge-primary">{{ticket.status}}</span></li>
   </ul>
   <div class="card-body">
