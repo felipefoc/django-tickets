@@ -7,27 +7,43 @@ Ticket | Visualizar
 
 {% block css %}
 div {
-    color: black;
-}
-textarea {
-  resize: none;
+  color: black;
 }
 #file {
   width: 250px;
+}
+#header {
+  text-align: justify;
+}
+#header2 {
+  float: right;
+}
+#header3 {
+  display: inherit;
+}
+#textarea {
+    border: 5px solid black;
+    min-width: 100%;
+    height: auto;
+    min-height: 250px;
 }
 {% endblock css %}
 
 {% block content %}
 <div class="card">
  <ul class="list-group list-group-flush">
-    <li class="list-group-item"><em>Ticket criado em:</em><br><strong>  {{ticket.criado_em}}</strong></li>
-    <li class="list-group-item"><em> Aberto por:</em><strong> {# ticket.operador #}Nome do Operador </strong> em <strong>{# data abertura operador #}</strong> 5 de Janeiro de 2020.</li>
-    <li class="list-group-item">Setor: {{ticket.setor}} <br >Tipo: {{ticket.tipo}}</strong></li>
+    <li class="list-group-item" id="header"><em> Aberto por: </em><strong>{{ticket.operator}}</strong> em <strong>{{ticket.operator_receive_date}}</strong>
+    <div id="header2"><em>Ticket criado em:</em><strong> {{ticket.created_at}}</strong></div></li>
+    <li id="header3" class="list-group-item">Setor: {{ticket.sector}}<br>Tipo: {{ticket.sort}}</strong></li>
     <br>
     <br>
-    <li class="list-group-item">Problema relatado : <br>
-      <textarea rows="20" cols="100%" disabled>
-      {{ticket.created_by.first_name}}: <br> \n{{ticket.description}}</textarea></li>
+    <li class="list-group-item"><h4>Descrição do ticket :</h4><br>
+    <h5>{{ticket.created_by}}</h5>
+      <div id="textarea" contenteditable="False">
+        <div id="first_comment">
+            {{ticket.description}}
+        </div>             
+    </li>
     <lu class="list-group-item"><img id="file" src="media/{{ticket.files}}">
     <li class="list-group-item">Status : <span class="badge badge-primary">{{ticket.status}}</span></li>
   </ul>

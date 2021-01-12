@@ -1,5 +1,12 @@
+from django.forms.models import model_to_dict
+
 from django import forms
-from .models import Tickets
+from django.forms.widgets import CheckboxSelectMultiple
+
+from home.models import Account, SectorType
+
+from .models import OperatorAccount, Tickets
+
 
 class NewTicket(forms.ModelForm):
     class Meta:
@@ -24,7 +31,7 @@ class NewTicket(forms.ModelForm):
 class EditTicket(forms.ModelForm):
     class Meta:
         model = Tickets
-        exclude = ['created_by', 'status', 'is_active']
+        exclude = ['created_by', 'status', 'is_active', 'operator_receive_date', 'ended_in']
 
 
     def __init__(self, *args, **kwargs):
@@ -51,3 +58,17 @@ class TicketForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TicketForm, self).__init__(*args, **kwargs)
          
+
+class OperatorSettings(forms.ModelForm):
+    class Meta():
+        model = OperatorAccount
+        fields = '__all__'
+
+    # fixthis sector = forms.MultipleChoiceField(SectorType.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        super(OperatorSettings, self).__init__(*args, **kwargs)
+        self.fields['sector'].label = 'Setores :'
+        self.fields['sort'].label = 'Tipos :'
+        self.fields['operator'].label = 'Operador :'
+        self.fields['operator'].queryset = Account.objects.filter(is_operator=True)

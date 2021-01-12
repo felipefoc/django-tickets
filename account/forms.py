@@ -1,7 +1,11 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, SetPasswordForm
-from django.forms import ModelForm, PasswordInput
-from django.contrib.auth import forms
+from typing import operator
+
 from django import forms as fforms
+from django.contrib.auth import forms
+from django.contrib.auth.forms import (AuthenticationForm, SetPasswordForm,
+                                       UserChangeForm, UserCreationForm)
+from django.forms import ModelForm, PasswordInput
+
 from .models import Account
 
 
@@ -61,4 +65,5 @@ class SetPasswordForm(forms.SetPasswordForm):
         self.fields['new_password1'].widget.attrs.update({'class': 'form-control', 'placeholder': '...'})
         self.fields['new_password2'].widget.attrs.update({'class': 'form-control', 'pĺaceholder': '...'})
 
-    
+
+

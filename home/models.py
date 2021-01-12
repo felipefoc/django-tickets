@@ -3,6 +3,10 @@ from account.models import Account
 from django.conf import settings
 
 # Create your models here.
+
+
+
+
 class TicketType(models.Model):
     name = models.CharField(max_length=30)
     status = models.BooleanField(default=True)
@@ -40,7 +44,33 @@ class Tickets(models.Model):
     description = models.TextField(null=True)
     operator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                                 null=True, related_name='operator')
+    operator_receive_date = models.DateTimeField(null=True)
     ended_in = models.DateTimeField(null=True)
     files = models.FileField(upload_to=user_directory_path , max_length=5000,
                              null=True, blank=True)
     is_active = models.BooleanField(default=True)
+
+
+class Reply(models.Model):
+    text = models.TextField()
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE)
+
+
+class CoReply(models.Model):
+    text = models.TextField()
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE)
+    reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
+
+
+'''
+Não consegui deixar essa classe no Account por conta de 'CircularImport' 
+'''
+class OperatorAccount(models.Model):
+    operator = models.ForeignKey(Account, on_delete=models.CASCADE)
+    sort = models.ManyToManyField(TicketType)
+    sector = models.ManyToManyField(SectorType)
+    

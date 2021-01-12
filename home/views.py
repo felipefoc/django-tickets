@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Tickets
-from .forms import NewTicket, EditTicket, TicketForm
+from .forms import NewTicket, EditTicket, TicketForm, OperatorSettings
 from django.conf import settings
 import random, string
 
@@ -80,3 +80,10 @@ def verTicket(request, id):
     ticket = Tickets.objects.filter(id=id).first()
     context = {'ticket': ticket }
     return render(request, 'templates/verticket.html', context)
+
+
+def settingsOperator(request, username='oi'):
+    form = OperatorSettings()
+    print(form)
+    context = {'form': form }
+    return render(request, 'templates/operador.html', context)

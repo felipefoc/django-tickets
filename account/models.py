@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
+
+
+
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password=None):
         if not email:
@@ -33,6 +36,7 @@ class MyAccountManager(BaseUserManager):
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
+        return user
 
 
 
@@ -46,6 +50,7 @@ class Account(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_operator = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
     objects = MyAccountManager()
@@ -54,10 +59,11 @@ class Account(AbstractBaseUser):
     REQUIRED_FIELDS = ['first_name', 'last_name', ]
 
     def __str__(self):
-        return self.email
+        return f'{self.first_name} {self.last_name}'
 
     def has_perm(self, perm, obj=None):
         return self.is_admin
     
     def has_module_perms(self, app_label):
         return True
+
