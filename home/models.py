@@ -70,7 +70,7 @@ class CoReply(models.Model):
 Não consegui deixar essa classe no Account por conta de 'CircularImport' 
 '''
 class OperatorAccount(models.Model):
-    operator = models.ForeignKey(Account, on_delete=models.CASCADE)
+    operator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     sort = models.ManyToManyField(TicketType)
     sector = models.ManyToManyField(SectorType)
     

@@ -1,9 +1,8 @@
-from django.forms.models import model_to_dict
-
 from django import forms
+from django.forms.models import model_to_dict
 from django.forms.widgets import CheckboxSelectMultiple
 
-from home.models import Account, SectorType
+from home.models import Account, SectorType, TicketType
 
 from .models import OperatorAccount, Tickets
 
@@ -62,13 +61,24 @@ class TicketForm(forms.ModelForm):
 class OperatorSettings(forms.ModelForm):
     class Meta():
         model = OperatorAccount
-        fields = '__all__'
+        fields = ('sector1', 'sort1', 'operator')
 
-    # fixthis sector = forms.MultipleChoiceField(SectorType.objects.all())
+    sector1 = forms.ModelMultipleChoiceField(
+        queryset = SectorType.objects.filter(status=True),
+        widget  = forms.CheckboxSelectMultiple,
+        label = 'Setor',
+    )
+
+    sort1 = forms.ModelMultipleChoiceField(
+        queryset = TicketType.objects.filter(status=True),
+        widget  = forms.CheckboxSelectMultiple,
+        label = 'Tipo :',
+    )
+
 
     def __init__(self, *args, **kwargs):
         super(OperatorSettings, self).__init__(*args, **kwargs)
-        self.fields['sector'].label = 'Setores :'
-        self.fields['sort'].label = 'Tipos :'
+        #self.fields['sector'].label = 'Setores :'
+        #self.fields['sort'].label = 'Tipos :'
         self.fields['operator'].label = 'Operador :'
         self.fields['operator'].queryset = Account.objects.filter(is_operator=True)

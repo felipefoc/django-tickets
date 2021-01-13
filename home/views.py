@@ -82,8 +82,17 @@ def verTicket(request, id):
     return render(request, 'templates/verticket.html', context)
 
 
-def settingsOperator(request, username='oi'):
+def settingsOperator(request, username):
     form = OperatorSettings()
-    print(form)
+    if request.method == 'POST':
+        form = OperatorSettings(request.POST)
+        if form.is_valid():
+            x = form.cleaned_data.get('sector1')
+            for i in x:
+                i.save()
+                print(i)
+        else:
+            print('not valid')
+        
     context = {'form': form }
     return render(request, 'templates/operador.html', context)
