@@ -65,12 +65,3 @@ class CoReply(models.Model):
     ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE)
     reply = models.ForeignKey(Reply, on_delete=models.CASCADE)
 
-
-'''
-Não consegui deixar essa classe no Account por conta de 'CircularImport' 
-'''
-class OperatorAccount(models.Model):
-    operator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    sort = models.ManyToManyField(TicketType)
-    sector = models.ManyToManyField(SectorType)
-    

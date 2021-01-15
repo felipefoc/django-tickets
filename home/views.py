@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Tickets
-from .forms import NewTicket, EditTicket, TicketForm, OperatorSettings
+from .forms import NewTicket, EditTicket, TicketForm
 from django.conf import settings
 import random, string
 
@@ -82,17 +82,3 @@ def verTicket(request, id):
     return render(request, 'templates/verticket.html', context)
 
 
-def settingsOperator(request, username):
-    form = OperatorSettings()
-    if request.method == 'POST':
-        form = OperatorSettings(request.POST)
-        if form.is_valid():
-            x = form.cleaned_data.get('sector1')
-            for i in x:
-                i.save()
-                print(i)
-        else:
-            print('not valid')
-        
-    context = {'form': form }
-    return render(request, 'templates/operador.html', context)
