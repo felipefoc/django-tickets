@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Tickets
+from .models import Tickets, Reply
 from .forms import NewTicket, EditTicket, TicketForm
 from django.conf import settings
-from django.utils import timezone
-import random, string
+
+
 
 
 
@@ -44,8 +44,6 @@ def novoTicket(request, username):
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.created_by = request.user
-            filename = f"arquivo_{timezone.now()}"
-            new_form.files.field.upload_to = f'user_{request.user.id}/{filename}'
             new_form.save()
             return redirect('home', username=request.user.first_name )
     else:
@@ -83,17 +81,17 @@ def editTicket(request, id):
         form = EditTicket(request.POST, request.FILES, instance=ticket)
         if form.is_valid():
             new_form = form.save(commit=False)
-            filename = ''.join(random.choice(string.ascii_letters) for _ in range(5))
-            #new_form.image.field.upload_to = f'user_{request.user.id}/{filename}'
             new_form.save()
             return redirect('home', username=request.user.first_name )
-
     context = {'user' : request.user,
                'form' : form }
     return render(request, 'templates/editticket.html', context)
 
 
+@login_required
 def verTicket(request, id):
     ticket = Tickets.objects.filter(id=id).first()
-    context = {'ticket': ticket }
+    replies = Reply.objects.filter(ticket_id=id)
+    context = {'ticket': ticket,
+               'replies': replies,}
     return render(request, 'templates/verticket.html', context)

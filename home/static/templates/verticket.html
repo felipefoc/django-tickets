@@ -16,37 +16,72 @@ div {
   text-align: justify;
 }
 #header2 {
-  float: right;
+  text-align: end;
+  padding-right: 15px;
+  padding-top: 5px;
 }
 #header3 {
   display: inherit;
 }
 #textarea {
-    border: 5px solid black;
+    border: 0.5px solid black;
     min-width: 100%;
     height: auto;
     min-height: 250px;
 }
+.author_textarea{
+  background-color: gray;
+}
+.response_textarea{
+  background-color: black;
+}
+h6 {
+  text-align: initial;
+}
+.author_resp {
+  text-align: end;
+}
+#first_comment {
+  color: white;
+}
+
 {% endblock css %}
 
 {% block content %}
 <div class="card">
  <ul class="list-group list-group-flush">
+  {% if ticket.operator %}
     <li class="list-group-item" id="header"><em> Aberto por: </em><strong>{{ticket.operator}}</strong> em <strong>{{ticket.operator_receive_date}}</strong>
+  {% endif %}
     <div id="header2"><em>Ticket criado em:</em><strong> {{ticket.created_at}}</strong></div></li>
     <li id="header3" class="list-group-item">Setor: {{ticket.sector}}<br>Tipo: {{ticket.sort}}</strong></li>
     <br>
     <br>
     <li class="list-group-item"><h4>Descrição do ticket :</h4><br>
-    <h5>{{ticket.created_by}}</h5>
-      <div id="textarea" contenteditable="False">
+    <h6>{{ticket.created_by}}</h6>
+      <div id="textarea" class="author_textarea" contenteditable="False">
         <div id="first_comment">
             {{ticket.description}}
         </div>             
     </li>
-    <lu class="list-group-item"><img id="file" src="media/{{ticket.files}}">
+  {% for i in replies %}
+    <li class="list-group-item"><h6 class="{% if ticket.created_by_id == i.owner_id %}author_textarea{% else %}author_resp{% endif %}">{{i.}}</h6>
+      <div id="textarea" class="response_textarea" contenteditable="False">
+        <div id="first_comment">
+            {{i.text}}
+        </div>
+    </li>
+  {% endfor %}
+    {% if ticket.files %}
+    <li class="list-group-item"><h4>Arquivos Anexados :</h4><br> 
+    <li class="list-group-item"><a href="media/{{ticket.files}}" 
+                                   target="_blank"
+                                   data-toggle="tooltip" title="Abrir">
+        <img id="file" src="media/{{ticket.files}}"></li></a>
+    {% endif %}
     <li class="list-group-item">Status : <span class="badge badge-primary">{{ticket.status}}</span></li>
   </ul>
+
   <div class="card-body">
     Ações <br>
     <a href="{% url 'deleteticket' id=ticket.id %}" data-toggle="tooltip" title="Excluir Ticket">

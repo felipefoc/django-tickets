@@ -30,7 +30,7 @@ class NewTicket(forms.ModelForm):
 class EditTicket(forms.ModelForm):
     class Meta:
         model = Tickets
-        exclude = ['created_by', 'status', 'is_active', 'operator_receive_date', 'ended_in']
+        exclude = ['created_by', 'status', 'is_active', 'operator_receive_date', 'ended_in', 'operator']
 
 
     def __init__(self, *args, **kwargs):
