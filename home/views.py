@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Tickets
 from .forms import NewTicket, EditTicket, TicketForm
 from django.conf import settings
+from django.utils import timezone
 import random, string
 
 
@@ -11,12 +12,28 @@ import random, string
 # Create your views here.
 @login_required
 def homePage(request, username):
-    '''
+    """
     A homepage deve conter todos tickets ativos do usuário e só.. manter o mais "clean" possível. 
-    '''
-    tickets = Tickets.objects.filter(created_by=request.user, is_active=True).order_by('-created_at') # Tickets em aberto
-    context = {'user' : request.user,
-               'tickets': tickets }
+    """
+    pending_tickets = []
+    andando_tickets = []
+    finished_tickets = []
+
+    tickets = Tickets.objects.filter(created_by=request.user, is_active=True).order_by('-created_at')
+    for t in tickets:
+        if t.status == "Pendente":
+            pending_tickets.append(t)
+        elif t.status == "Em andamento":
+            andando_tickets.append(t)
+        elif t.status == "Finalizado":
+            finished_tickets.append(t)
+
+    context = {
+        "user" : request.user, 
+        "pending_tickets": pending_tickets, 
+        "andando_tickets": andando_tickets, 
+        "finished_tickets": finished_tickets,
+    }
     return render(request, 'templates/home.html', context)
 
 
@@ -27,7 +44,7 @@ def novoTicket(request, username):
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.created_by = request.user
-            filename = ''.join(random.choice(string.ascii_letters) for _ in range(5)) 
+            filename = f"arquivo_{timezone.now()}"
             new_form.files.field.upload_to = f'user_{request.user.id}/{filename}'
             new_form.save()
             return redirect('home', username=request.user.first_name )
@@ -80,5 +97,3 @@ def verTicket(request, id):
     ticket = Tickets.objects.filter(id=id).first()
     context = {'ticket': ticket }
     return render(request, 'templates/verticket.html', context)
-
-

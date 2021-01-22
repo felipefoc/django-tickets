@@ -9,8 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for ticket in tickets %}
-      {% if ticket.status == 'Pendente' %}
+    {% for ticket in pending_tickets %}
       <tr>
         <td>{{ticket.sort}}</td>
         <td>{{ticket.sector}}</td>
@@ -30,7 +29,6 @@
           </div>
         </td>
       </tr>
-      {% endif %}
     {% empty %}
       <tr>  
         <td colspan="10">
