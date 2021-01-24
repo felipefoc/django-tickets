@@ -1,39 +1,35 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Tickets, Reply
-from .forms import NewTicket, EditTicket, TicketForm
+from ..models import Tickets, Reply
+from ..forms import NewTicket, EditTicket, TicketForm, ReplyForm
 from django.conf import settings
 
 
-
-
-
-# Create your views here.
 @login_required
 def homePage(request, username):
     """
     A homepage deve conter todos tickets ativos do usuário e só.. manter o mais "clean" possível. 
     """
-    pending_tickets = []
-    andando_tickets = []
-    finished_tickets = []
+    table_open = []
+    table_outdated = []
+    table_closed = []
 
     tickets = Tickets.objects.filter(created_by=request.user, is_active=True).order_by('-created_at')
     for t in tickets:
         if t.status == "Pendente":
-            pending_tickets.append(t)
+            table_open.append(t)
         elif t.status == "Em andamento":
-            andando_tickets.append(t)
+            table_outdated.append(t)
         elif t.status == "Finalizado":
-            finished_tickets.append(t)
+            table_closed.append(t)
 
     context = {
         "user" : request.user, 
-        "pending_tickets": pending_tickets, 
-        "andando_tickets": andando_tickets, 
-        "finished_tickets": finished_tickets,
-    }
+        "table_open": table_open, 
+        "table_outdated": table_outdated, 
+        "table_closed": table_closed,
+        }
     return render(request, 'templates/home.html', context)
 
 
@@ -45,7 +41,7 @@ def novoTicket(request, username):
             new_form = form.save(commit=False)
             new_form.created_by = request.user
             new_form.save()
-            return redirect('home', username=request.user.first_name )
+            return redirect('home', username=request.user.first_name)
     else:
         form = NewTicket()   
 
@@ -65,7 +61,7 @@ def deleteTicket(request, id):
         if ticket.created_by == request.user:
             ticket.is_active = False
             ticket.save()
-        return redirect('home', username=request.user.first_name )
+        return redirect('home', username=request.user.first_name)
     except:
         print('Ticket not found')
 
@@ -92,6 +88,15 @@ def editTicket(request, id):
 def verTicket(request, id):
     ticket = Tickets.objects.filter(id=id).first()
     replies = Reply.objects.filter(ticket_id=id)
+    form = ReplyForm()
+    if request.method == 'POST':
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            forms = form.save(commit=False)
+            forms.ticket_id = id
+            forms.owner_id = request.user.id
+            forms.save()
     context = {'ticket': ticket,
-               'replies': replies,}
+               'replies': replies,
+               'form': form,}
     return render(request, 'templates/verticket.html', context)

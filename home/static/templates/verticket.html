@@ -22,12 +22,13 @@ div {
 }
 #header3 {
   display: inherit;
+  text-align: initial;
 }
 #textarea {
     border: 0.5px solid black;
     min-width: 100%;
     height: auto;
-    min-height: 250px;
+    min-height: 150px;
 }
 .author_textarea{
   background-color: gray;
@@ -44,6 +45,9 @@ h6 {
 #first_comment {
   color: white;
 }
+#reply {
+  display: block ruby;
+}
 
 {% endblock css %}
 
@@ -58,20 +62,35 @@ h6 {
     <br>
     <br>
     <li class="list-group-item"><h4>Descrição do ticket :</h4><br>
-    <h6>{{ticket.created_by}}</h6>
+    <h6>{{ticket.created_by}}</h6><h6>{{ticket.created_at|date:"d/M, Y H:m"}}</h6>
       <div id="textarea" class="author_textarea" contenteditable="False">
         <div id="first_comment">
             {{ticket.description}}
         </div>             
     </li>
   {% for i in replies %}
-    <li class="list-group-item"><h6 class="{% if ticket.created_by_id == i.owner_id %}author_textarea{% else %}author_resp{% endif %}">{{i.}}</h6>
-      <div id="textarea" class="response_textarea" contenteditable="False">
+    <li class="list-group-item"><h6 class="{% if ticket.created_by == i.owner %}auhtor_textarea{% else %}author_resp{% endif %}">{{i.owner}}</h6>
+    <h6 class="{% if ticket.created_by == i.owner %}auhtor_textarea{% else %}author_resp{% endif %}">{{i.date|date:"d/M, Y H:m"}}</h6>
+      <div id="textarea" class="{% if ticket.created_by == i.owner %}author_textarea{% else %}response_textarea{% endif %}" contenteditable="False">
         <div id="first_comment">
             {{i.text}}
         </div>
     </li>
   {% endfor %}
+  <li class="list-group-item">
+  <div id="reply">
+    <form method='POST' 
+          action='{% if user.is_operator %}{% url 'verTicketOperator' ticket.id %}{% else %}{% url 'ticket' ticket.id %}{% endif %}' hidden>
+      {% csrf_token %}
+      {{form}}
+  </div>
+  </li>
+  <div class="card-body" id="reply">
+  <button type="submit" class="btn btn-success" id="submit" hidden>Enviar Resposta</button>
+  <button type="button" class="btn btn-warning" onclick="reply()" id="button_reply">Responder</button>
+  <div id="cancel"></div>
+  </div>
+  </form>
     {% if ticket.files %}
     <li class="list-group-item"><h4>Arquivos Anexados :</h4><br> 
     <li class="list-group-item"><a href="media/{{ticket.files}}" 
@@ -100,5 +119,24 @@ h6 {
 
 
 {% block script %}
+<script>
+function reply() { 
+  $('form').attr('hidden', false);
+  let reply = $('#button_reply');
+  $('#submit').attr('hidden', false);
+  reply.html('Enviar Resposta');
+  reply.attr('hidden',true);
+  $("#cancel").html("<button class='btn btn-danger' onclick='dismissReply()' id='dismiss'>Cancelar Resposta</button>");
+}
 
+function dismissReply() {
+  let button = $('#button_reply');
+  button.attr('hidden', false);
+  button.html('Responder');
+  dismiss = $('#dismiss').remove();
+  dismiss = $('#replytext').remove();
+  $('#submit').attr('hidden', true);
+  $('form').attr('hidden', true);
+}
+</script>
 {% endblock script %}

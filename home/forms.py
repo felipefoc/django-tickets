@@ -4,7 +4,7 @@ from django.forms.widgets import CheckboxSelectMultiple
 
 from home.models import Account, SectorType, TicketType
 
-from .models import Tickets
+from .models import Tickets, Reply
 
 
 class NewTicket(forms.ModelForm):
@@ -57,3 +57,15 @@ class TicketForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TicketForm, self).__init__(*args, **kwargs)
          
+
+class ReplyForm(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ['text',]
+
+    def __init__(self, *args, **kwargs):
+        super(ReplyForm, self).__init__(*args, **kwargs)
+        self.fields['text'].widget.attrs.update({'class': 'form-control',
+            'placeholder': 'Digite a resposta do ticket...'})
+        self.fields['text'].label = 'Resposta :'
+    

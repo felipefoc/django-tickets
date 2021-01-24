@@ -39,7 +39,7 @@ class Tickets(models.Model):
     sector = models.ForeignKey(SectorType, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-    modified_date = models.DateTimeField(auto_now=True)
+    modified_date = models.DateTimeField(auto_now=True, auto_now_add=False)
     status = models.CharField(max_length=30, choices=CHOICES, default='Pendente', blank=False, null=False)
     description = models.TextField(null=True)
     operator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
@@ -51,9 +51,10 @@ class Tickets(models.Model):
     is_active = models.BooleanField(default=True)
 
 
+
 class Reply(models.Model):
     text = models.TextField()
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-    date = models.DateTimeField(auto_now_add=True)
-    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True, null=True)
+    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, null=True)
 

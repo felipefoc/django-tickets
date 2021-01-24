@@ -11,6 +11,12 @@ def loginPage(request):
     '''
     Página de login
     '''
+    if request.user.is_authenticated and request.user.is_active:
+        if request.user.is_operator:
+            return redirect('homeOperator', username=request.user.first_name)
+        return redirect('home', username=request.user.first_name)
+   
+
     form = LoginForm()
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -20,8 +26,9 @@ def loginPage(request):
 
         if user is not None and user.is_active:
             login(request, user)
+            if user.is_operator:
+                return redirect('homeOperator', username=user.first_name)
             return redirect('home', username=user.first_name)
-
         else:
             messages.error(request, 'Nome de usuário e/ou senha incorreto')           
     context = {'form': form }
