@@ -38,7 +38,6 @@ def verTicketOperator(request, id):
             forms.ticket_id = id
             forms.owner_id = request.user.id
             forms.save()
-            return redirect('homeOperator', username=request.user.first_name)
     context = {'ticket': ticket,
                'replies': replies,
                'form': form,}

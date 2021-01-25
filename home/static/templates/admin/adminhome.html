@@ -1,0 +1,14 @@
+{% extends 'templates/base.html' %}
+{% load static %}
+
+{% block title %}
+{{ user.first_name }} | ADMIN
+{% endblock %}
+
+{% block content %}
+    {% include 'templates/admin/admin_sectors.html' %}
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}
