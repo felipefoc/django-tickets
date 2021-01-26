@@ -1,0 +1,38 @@
+<div class="card" id="sorts">
+    <div class="card-body">
+        <div class="card-header mt-1">
+            <h1>Tipos</h1>
+        </div>
+        <table class="table" style="background-color: white">
+            <thead>
+                <tr>
+                    <td colspan='2'>
+                        <button class="btn btn-primary btn-round">
+                        <i class="fa fa-plus"></i> Adicionar novo tipo 
+                        </button>
+                    </td>
+                <tr>
+                <tr>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sort in all_sorts %}
+                <tr>
+                    <td>{{sort.name}}</td>
+                    {% if sort.status == True %}
+                        <td><span class="badge badge-success">Ativo</span></td>
+                    {% else %}
+                        <td><span class="badge badge-default">Desativado</span></td>
+                    {% endif%}
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan='2'>Você ainda não tem nenhum tipo cadastrado</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

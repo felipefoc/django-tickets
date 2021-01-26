@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" id="sectors">
     <div class="card-body">
         <div class="card-header mt-1">
             <h1>Setores</h1>
@@ -7,21 +7,27 @@
             <thead>
                 <tr>
                     <td colspan='2'>
+                    <a href="{% url 'createSector' username=user.first_name %}">
                         <button class="btn btn-primary btn-round">
                         <i class="fa fa-plus"></i> Adicionar novo setor 
                         </button>
+                    </a>
                     </td>
                 <tr>
                 <tr>
                     <th scope="col">Setor</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 {% for sector in all_sectors %}
                 <tr>
                     <td>{{sector.name}}</td>
-                    <td>{{sector.status}}</td>
+                    <td><a href="{% url 'removeSector' id=sector.id %}"<span class="badge badge-danger">Remover</span></a></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan='2'>Você ainda não tem nenhum setor cadastrado</td>
                 </tr>
                 {% endfor %}
             </tbody>

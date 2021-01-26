@@ -1,12 +1,31 @@
 {% extends 'templates/base.html' %}
 {% load static %}
 
+{% block css %}
+.card {
+    width: max-content;
+    min-width: 500px;
+    display: inline-block;
+}
+#tables {
+    display: flex;
+    justify-content: space-evenly;
+}
+h1 {
+    font-family: arial, helvetica, sans-serif;
+    color: black;
+}
+
+{% endblock %}
 {% block title %}
 ADMIN | SETORES
 {% endblock %}
 
 {% block content %}
+<div id='tables'>
     {% include 'templates/admin/admin_sectors.html' %}
+    {% include 'templates/admin/admin_sorts.html' %}
+</div>
 {% endblock content %}
 
 {% block script %}

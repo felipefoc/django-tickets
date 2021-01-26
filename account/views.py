@@ -4,21 +4,39 @@ from django.contrib.auth import authenticate, login, logout as django_logout, up
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import UserCreationForm, LoginForm, SetPasswordForm
-from account.presenters.loginPagePresenter import LoginPagePresenter
+
 
 # Create your views here.
 def loginPage(request):
     '''
     Página de login
     '''
-    userIsActiveAndAuthenticated = LoginPagePresenter.userAuthenticatedAndActivaded(request)
-    requestIsPost = LoginPagePresenter.requestIsPost(request, authenticate, login, messages)
-    if userIsActiveAndAuthenticated != None:
-        return redirect(userIsActiveAndAuthenticated[0], userIsActiveAndAuthenticated[1])
+    if request.user.is_authenticated and request.user.is_active:
+        if request.user.is_operator:
+            return redirect('homeOperator', username=request.user.first_name)
+        elif request.user.is_admin:
+            return redirect('adminHome', username=request.user.first_name)
+        return redirect('home', username=request.user.first_name)
+   
 
     form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None and user.is_active:
+            login(request, user)
+            if user.is_operator:
+                return redirect('homeOperator', username=user.first_name)
+            elif request.user.is_admin:
+                return redirect('adminHome', username=request.user.first_name)
+            return redirect('home', username=user.first_name)
+        else:
+            messages.error(request, 'Nome de usuário e/ou senha incorreto')           
     context = {'form': form }
-    return render(requestIsPost[0],requestIsPost[1],requestIsPost[2])
+    return render(request, 'templates/login-page.html', context)
 
 
 def registerPage(request):
@@ -54,7 +72,3 @@ def changePassword(request):
 def logout(request):
     django_logout(request)
     return redirect('login')
-
-
-
-

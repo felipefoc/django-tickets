@@ -1,10 +1,6 @@
 from django import forms
-from django.forms.models import model_to_dict
 from django.forms.widgets import CheckboxSelectMultiple
-
-from home.models import Account, SectorType, TicketType
-
-from .models import Tickets, Reply
+from .models import Account, Reply, SectorType, Tickets, TicketType
 
 
 class NewTicket(forms.ModelForm):
@@ -53,7 +49,6 @@ class TicketForm(forms.ModelForm):
         model = Tickets
         fields = '__all__'
 
-
     def __init__(self, *args, **kwargs):
         super(TicketForm, self).__init__(*args, **kwargs)
          
@@ -61,11 +56,24 @@ class TicketForm(forms.ModelForm):
 class ReplyForm(forms.ModelForm):
     class Meta:
         model = Reply
-        fields = ['text',]
+        fields = ['text']
+
 
     def __init__(self, *args, **kwargs):
         super(ReplyForm, self).__init__(*args, **kwargs)
         self.fields['text'].widget.attrs.update({'class': 'form-control',
             'placeholder': 'Digite a resposta do ticket...'})
         self.fields['text'].label = 'Resposta :'
-    
+
+
+class CreateSector(forms.ModelForm):
+    class Meta:
+        model = SectorType
+        fields = ['name']
+
+    def __init__(self, *args, **kwargs):
+        super(CreateSector, self).__init__(*args, **kwargs)
+        self.fields['name'].label = 'Insira o nome do setor :'
+        self.fields['name'].widget.attrs.update({'class': 'form-control'})
+
+

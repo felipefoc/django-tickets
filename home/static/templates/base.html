@@ -75,7 +75,7 @@
       <!-- Admin NAVBAR -->
       {% if user.is_admin %}
       <li class="nav-item dropdown">        
-        <a class="nav-link " href="{% url 'adminhome' username=user.first_name %}" id="navbarDropdownMenuLink">
+        <a class="nav-link " href="{% url 'admin_sectors' username=user.first_name %}" id="navbarDropdownMenuLink">
         Setores
         </a>
       </li>
