@@ -3,10 +3,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-from home.forms import CreateSector
 
-from ..forms import CreateSector, EditTicket, NewTicket, ReplyForm, TicketForm
+
+from ..forms import CreateSector, EditTicket, NewTicket, ReplyForm, TicketForm, CreateType, AddOperator
 from ..models import Reply, SectorType, Tickets, TicketType
+
+from account.models import Account
 
 
 def adminHome(request, username):
@@ -37,3 +39,34 @@ def removeSector(request, id):
     sector = SectorType.objects.get(pk=id)
     sector.delete()
     return redirect('admin_sectors', username=request.user.first_name)
+
+
+def createType(request, username):
+    form = CreateType()
+    if request.method == 'POST':
+        form = CreateType(request.POST)
+        if form.is_valid():
+            form.save()    
+    context = {'form': form }
+    return render(request, 'templates/admin/create_type.html', context)
+
+
+def removeType(request, id):
+    sort = TicketType.objects.get(pk=id)
+    sort.delete()
+    return redirect('admin_sectors', username=request.user.first_name)
+
+
+def operadorHome(request, username):
+    all_operators = Account.objects.filter(is_operator=True)
+    context = {'all_operators': all_operators }
+    return render(request, 'templates/admin/adminOperators.html', context)
+
+def addOperators(request, username):
+    form = AddOperator()
+    if request.method == 'POST':
+        form = AddOperator(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {'form': form}
+    return render(request, 'templates/admin/create_operator.html', context)

@@ -8,7 +8,7 @@
                 <tr>
                     <td colspan='2'>
                     <a href="{% url 'createSector' username=user.first_name %}">
-                        <button class="btn btn-primary btn-round">
+                        <button class="btn btn-success btn-round">
                         <i class="fa fa-plus"></i> Adicionar novo setor 
                         </button>
                     </a>
@@ -27,7 +27,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan='2'>Você ainda não tem nenhum setor cadastrado</td>
+                    <td colspan='2'><strong>Você ainda não tem nenhum setor cadastrado</strong></td>
                 </tr>
                 {% endfor %}
             </tbody>

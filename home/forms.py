@@ -3,6 +3,7 @@ from django.forms.widgets import CheckboxSelectMultiple
 from .models import Account, Reply, SectorType, Tickets, TicketType
 
 
+
 class NewTicket(forms.ModelForm):
     class Meta:
         model = Tickets
@@ -77,3 +78,27 @@ class CreateSector(forms.ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
 
 
+class CreateType(forms.ModelForm):
+    class Meta:
+        model = TicketType
+        fields = ['name']
+
+    def __init__(self, *args, **kwargs):
+        super(CreateType, self).__init__(*args, **kwargs)
+        self.fields['name'].label = 'Insira o nome do Tipo :'
+        self.fields['name'].widget.attrs.update({'class': 'form-control'})
+
+
+class AddOperator(forms.Form):
+    operators = forms.ModelChoiceField(queryset=Account.objects.filter(is_operator=False))
+
+    class Meta:
+        model = Account
+        fields = ['operators']
+    
+    def save(self, commit=True):
+    instance = super(AddOperator, self).save(commit=False)
+    instance.id = self.cleaned_data['operators'] # etc
+    if commit:
+        instance.save()
+    return instance
