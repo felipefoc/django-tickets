@@ -63,10 +63,16 @@ def operadorHome(request, username):
     return render(request, 'templates/admin/adminOperators.html', context)
 
 def addOperators(request, username):
-    form = AddOperator()
     if request.method == 'POST':
         form = AddOperator(request.POST)
         if form.is_valid():
-            form.save()
+            pk = form.cleaned_data['operators']
+            operator = Account.objects.get(pk=pk)
+            operator.is_operator = True
+            operator.save()
+        else:
+            print(form.errors)
+    else:
+        form = AddOperator()
     context = {'form': form}
     return render(request, 'templates/admin/create_operator.html', context)

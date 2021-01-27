@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.widgets import CheckboxSelectMultiple
+from django.core.exceptions import ValidationError
 from .models import Account, Reply, SectorType, Tickets, TicketType
 
 
@@ -95,10 +96,15 @@ class AddOperator(forms.Form):
     class Meta:
         model = Account
         fields = ['operators']
+
+    def is_valid(self):
+        valid = True
+        if self.data['operators']:
+            pk = self.data['operators']
+            user_exists = Account.objects.filter(pk=pk).first()
+            if user_exists and user_exists.is_admin == True:
+                valid = False
+                self.add_error('operators', 'DEU RUIM')
+            return self.cleaned_data
+
     
-    def save(self, commit=True):
-    instance = super(AddOperator, self).save(commit=False)
-    instance.id = self.cleaned_data['operators'] # etc
-    if commit:
-        instance.save()
-    return instance

@@ -9,6 +9,8 @@
 <form method="POST">
     {% csrf_token %}
     {{form.as_p}}
+    {{form.operator.errors}}
+    {{form.non_field_errors}}
     <button type='submit' class="btn btn-neutral btn-lg">Cadastrar</button>
 </form>
 {% endblock content %}
