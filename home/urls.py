@@ -20,4 +20,5 @@ urlpatterns = [
     path('RemoverTipo/<int:id>', views.removeType, name='removeType'),
     path('<str:username>_ADMIN/Operadores', views.operadorHome, name='operadorHome'),
     path('<str:username>_ADMIN/Operadores/AdicionarOperador', views.addOperators, name='addOperators'),
+    path('RemoverOperador/<int:id>', views.removeOperator, name='removeOperator'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

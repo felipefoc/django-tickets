@@ -13,7 +13,28 @@ from account.models import Account
 
 def adminHome(request, username):
     all_tickets = Tickets.objects.all()
-    context = {}
+    all_operators = Account.objects.filter(is_operator=True)
+    all_users = Account.objects.filter(is_operator=False, is_admin=False)
+    table_open = []
+    table_outdated = []
+    table_closed = []
+    
+    tickets = Tickets.objects.filter(is_active=True)
+    for t in tickets:
+        if t.status == "Pendente":
+            table_open.append(t)
+        elif t.status == "Em andamento":
+            table_outdated.append(t)
+        elif t.status == "Finalizado":
+            table_closed.append(t)
+            
+    context = {'all_tickets': all_tickets,
+               'table_open': table_open,
+               'table_outdated': table_outdated,
+               'table_closed': table_closed,
+               'all_operators': all_operators,
+               'all_users': all_users,
+                }
     return render(request, 'templates/admin/adminhome.html', context)
 
 
@@ -66,7 +87,7 @@ def addOperators(request, username):
     if request.method == 'POST':
         form = AddOperator(request.POST)
         if form.is_valid():
-            pk = form.cleaned_data['operators']
+            pk = form.data['operators']
             operator = Account.objects.get(pk=pk)
             operator.is_operator = True
             operator.save()
@@ -76,3 +97,12 @@ def addOperators(request, username):
         form = AddOperator()
     context = {'form': form}
     return render(request, 'templates/admin/create_operator.html', context)
+    
+    
+def removeOperator(request, id):
+    operator = Account.objects.filter(id=id).first()
+    operator.is_operator = False
+    operator.save()
+    username = request.user.first_name
+    return redirect('addOperators', username=username)
+    

@@ -5,6 +5,12 @@
 {{ user.first_name }} | ADICIONAR OPERADOR
 {% endblock %}
 
+{% block css %}
+p {
+	color: red;
+}
+{% endblock %}
+
 {% block content %}
 <form method="POST">
     {% csrf_token %}

@@ -74,6 +74,11 @@
       <ul class="navbar-nav">
       <!-- Admin NAVBAR -->
       {% if user.is_admin %}
+	  <li class="nav-item dropdown">        
+        <a class="nav-link " href="{% url 'adminHome' username=user.first_name %}" id="navbarDropdownMenuLink">
+        Dashboard
+        </a>
+      </li>
       <li class="nav-item dropdown">        
         <a class="nav-link " href="{% url 'admin_sectors' username=user.first_name %}" id="navbarDropdownMenuLink">
         Setores e Tipos

@@ -5,8 +5,55 @@
 {{ user.first_name }} | ADMIN
 {% endblock %}
 
+{% block css %}
+.card {
+    border-radius: 100px;
+    width: 300px;
+    height: 220px;
+    color: black;
+}
+
+.card-body {
+    display: inline-block;
+    position: relative;
+    top: 50px;
+}
+{% endblock %}
+
 {% block content %}
-    {% include 'templates/admin/admin_sectors.html' %}
+    <h1> Dashboard </h1>
+
+<div class="card">
+	<div class="card-header mt-1">Tickets criados até agora</div>
+	<div class="card-body"><h1>{{all_tickets|length}}</h1></div>
+</div>
+
+<div class="card">
+	<div class="card-header mt-1">Tickets em aberto</div>
+	<div class="card-body"><h1>{{table_open|length}}</h1></div>
+</div>
+
+<div class="card">
+	<div class="card-header mt-1">Tickets pendentes</div>
+	<div class="card-body"><h1>{{table_outdated|length}}</h1></div>
+</div>
+
+<div class="card">
+	<div class="card-header mt-1">Tickets fechados</div>
+	<div class="card-body"><h1>{{table_closed|length}}</h1></div>
+</div>
+
+<div class="card">
+	<div class="card-header mt-1">Operadores do sistema</div>
+	<div class="card-body"><h1>{{all_operators|length}}</h1></div>
+</div>
+
+<div class="card">
+	<div class="card-header mt-1">Usuários criados</div>
+	<div class="card-body"><h1>{{all_users|length}}</h1></div>
+</div>
+		
+		
 {% endblock content %}
 
 {% block script %}

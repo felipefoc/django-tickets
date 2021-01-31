@@ -105,6 +105,6 @@ class AddOperator(forms.Form):
             if user_exists and user_exists.is_admin == True:
                 valid = False
                 self.add_error('operators', 'DEU RUIM')
-            return self.cleaned_data
+            return pk
 
     
