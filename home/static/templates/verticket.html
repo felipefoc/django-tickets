@@ -106,7 +106,11 @@ h6 {
 
   <div class="card-body">
     Ações <br>
-    <a href="{% url 'deleteticket' id=ticket.id %}" data-toggle="tooltip" title="Excluir Ticket">
+    <a href="{% url 'deleteticket' id=ticket.id %}" 
+    data-toggle="tooltip" 
+    title="Excluir Ticket"
+    onclick="fireSweet()"
+    id="href">
           <i class="fas fa-window-close fa-lg">
     </i></a>
     <a href="{% url 'editticket' id=ticket.id %}" data-toggle="tooltip" title="Editar Ticket">
@@ -141,5 +145,26 @@ function dismissReply() {
   $('#submit').attr('hidden', true);
   $('form').attr('hidden', true);
 }
-</script>
+
+
+function fireSweet(){
+  event.preventDefault();
+  var href = $('#href').prop("href");
+  Swal.fire({
+    title: 'Deseja realmente excluir o ticket ?',
+    showDenyButton: true,
+    confirmButtonText: `Sim`,
+    denyButtonText: `Cancelar`,
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    Swal.fire('Excluido com sucesso!', '', 'success').then(function() {
+      window.location = href;
+    })
+  } else if (result.isDenied) {
+    
+  }
+})
+}
+  </script>
 {% endblock script %}

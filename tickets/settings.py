@@ -25,11 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '8=kuvi-5)xx4v-k)%q#89=k0x94ef@g8oluc&a$(s7%%#6!8r$'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True # SECURITY WARNING: don't run with debug turned on in production!
 
 ALLOWED_HOSTS = ['*']
 
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True # Drop session after browser close
 
 # Application definition
 
