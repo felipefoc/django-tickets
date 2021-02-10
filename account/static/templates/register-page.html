@@ -37,6 +37,14 @@
   <link href="{% static '/assets/css/now-ui-kit.map' %}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{% static '/assets/demo/demo.css' %}" rel="stylesheet" />
+  <style>
+  .errorlist {
+    list-style: none;
+  }
+  ul {
+    list-style-type: none;
+  }
+  </style>
 </head>
 
 <body class="login-page sidebar-collapse">
@@ -160,10 +168,19 @@
 						<div class="card-footer text-center">
 							<button type="submit" class="btn btn-neutral btn-round btn-lg">Confirmar</a>
 						</div>
+            {% if form.errors %}
+            <div class="container">
+                {% for key,value in form.errors.items %}
+                <div class="alert alert-danger" role="alert"> 
+                  <p>{{ value|escape }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
 					</form>
 				</div>
 			</div>
-			<div class="col text-center">
+			<div class="col text-center"> 
 				<a href="{% url 'login' %}" class="btn btn-outline-default btn-round btn-white btn-lg">Voltar para Login</a>
 			</div>
 		</div>

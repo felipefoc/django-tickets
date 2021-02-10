@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout as django_logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import sweetify
 from .forms import UserCreationForm, LoginForm, SetPasswordForm
 
 
@@ -48,7 +49,10 @@ def registerPage(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            sweetify.success(request, 'You successfully changed your password')
             return redirect('login')
+        else:
+            messages.error(request, form.errors)
     context = {'form': form}
     return render(request, 'templates/register-page.html', context)
 

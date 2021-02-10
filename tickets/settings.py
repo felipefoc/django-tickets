@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account.apps.AccountConfig',
     'home.apps.HomeConfig',
+    'sweetify',
 ]
 
 MIDDLEWARE = [
@@ -149,5 +150,7 @@ MESSAGE_TAGS = {
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 django_heroku.settings(locals())
