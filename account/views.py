@@ -3,11 +3,10 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout as django_logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-import sweetify
+import sweetify as swal
 from .forms import UserCreationForm, LoginForm, SetPasswordForm
 
 
-# Create your views here.
 def loginPage(request):
     '''
     Página de login
@@ -18,7 +17,6 @@ def loginPage(request):
         elif request.user.is_admin:
             return redirect('adminHome', username=request.user.first_name)
         return redirect('home', username=request.user.first_name)
-   
 
     form = LoginForm()
     if request.method == 'POST':
@@ -35,8 +33,8 @@ def loginPage(request):
                 return redirect('adminHome', username=request.user.first_name)
             return redirect('home', username=user.first_name)
         else:
-            messages.error(request, 'Nome de usuário e/ou senha incorreto')           
-    context = {'form': form }
+            messages.error(request, 'Nome de usuário e/ou senha incorreto')
+    context = {'form': form}
     return render(request, 'templates/login-page.html', context)
 
 
@@ -45,11 +43,12 @@ def registerPage(request):
     Página de Registro
     '''
     form = UserCreationForm()
-    if request.method == 'POST': 
+    if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            sweetify.success(request, 'You successfully changed your password')
+            swal.success(request, title='Criado com sucesso',
+                                  icon='success') # Swal funcionando sem necessidade de escrever JavaScript
             return redirect('login')
         else:
             messages.error(request, form.errors)
@@ -64,13 +63,14 @@ def changePassword(request):
             form = SetPasswordForm(request.user, request.POST)
             if form.is_valid():
                 form.save()
-                update_session_auth_hash(request, form.user)      
-                return HttpResponseRedirect('/{}'.format(request.user.first_name))           
+                update_session_auth_hash(request, form.user)
+                return HttpResponseRedirect('/{}'.format(request.user.first_name))
         else:
-            form = SetPasswordForm(request.user) 
-            print(form) 
-    context = {'form': form }
+            form = SetPasswordForm(request.user)
+            print(form)
+    context = {'form': form}
     return render(request, 'templates/changepassword.html', context)
+
 
 @login_required
 def logout(request):

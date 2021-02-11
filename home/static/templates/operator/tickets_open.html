@@ -1,6 +1,7 @@
 <table class="table table-bordered" style="background-color: white">
   <thead>
     <tr>
+      <th scope="col">Protocolo</th>
       <th scope="col">Tipo</th>
       <th scope="col">Setor</th>
       <th scope="col">Data</th>
@@ -9,8 +10,9 @@
     </tr>
   </thead>
   <tbody>
-    {% for ticket in tickets %}
+    {% for ticket in tickets_open %}
     <tr>
+      <td>{{ticket.id}}</td>
       <td>{{ticket.sort}}</td>
       <td>{{ticket.sector}}</td>
       <td>{{ticket.created_at}}</td>
@@ -29,7 +31,7 @@
     {% empty %}
     <tr>
       <td colspan="10">
-        <strong>Você não possui tickets fechados.</strong>
+        <strong>Você não possui tickets pendentes.</strong>
       </td>
     </tr>
     {% endfor %}

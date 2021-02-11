@@ -29,6 +29,7 @@ DEBUG = True # SECURITY WARNING: don't run with debug turned on in production!
 
 ALLOWED_HOSTS = ['*']
 
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True # Drop session after browser close
 
@@ -151,6 +152,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
+
 
 django_heroku.settings(locals())

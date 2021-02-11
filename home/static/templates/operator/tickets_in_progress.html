@@ -1,0 +1,39 @@
+<table class="table table-bordered" style="background-color: white">
+  <thead>
+    <tr>
+      <th scope="col">Protocolo</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Setor</th>
+      <th scope="col">Data</th>
+      <th scope="col">Status</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ticket in tickets_in_progress %}
+    <tr>
+      <td>{{ticket.id}}</td>
+      <td>{{ticket.sort}}</td>
+      <td>{{ticket.sector}}</td>
+      <td>{{ticket.created_at}}</td>
+      <td><span class="badge badge-default">{{ticket.status}}</span></td>
+      <td>
+        <div id="icons">
+            <a href="{% url 'openTicket' id=ticket.id %}" data-toggle="tooltip" title="Abrir Ticket">
+          <i class="fas fa-check-square fa-lg">
+            </i></a>
+            <a href="{% url 'verTicketOperator' id=ticket.id %}" data-toggle="tooltip" title="Visualizar Ticket">
+          <i class="fas fa-eye fa-lg">
+            </i></a>
+        </div>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="10">
+        <strong>Você não possui tickets pendentes.</strong>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
