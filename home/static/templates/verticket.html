@@ -79,7 +79,7 @@ h6 {
     </li>
   {% endfor %}
   <li class="list-group-item">
-  {% if replies|length >= 1 or user.is_operator %}
+  {% if replies|length >= 1 or user.is_operator and ticket.status != "Finalizado" %}
   <div id="reply">
     <form method='POST' 
           action='{% if user.is_operator %}{% url 'verTicketOperator' ticket.id %}{% else %}{% url 'ticket' ticket.id %}{% endif %}' hidden>
@@ -103,7 +103,7 @@ h6 {
     {% endif %}
     <li class="list-group-item">Status : <span class="badge badge-primary">{{ticket.status}}</span></li>
   </ul>
-
+{% if ticket.status != "Finalizado" %}
   <div class="card-body">
     Ações <br>
     <a href="{% url 'deleteticket' id=ticket.id %}" 
@@ -118,6 +118,7 @@ h6 {
     </i></a>
 
   </div>
+{% endif %}
 </div>
 {% endblock content %}
 

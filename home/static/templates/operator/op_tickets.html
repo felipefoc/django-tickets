@@ -31,5 +31,27 @@
 {% endblock content %}
 
 {% block script %}
+<script>
+function fireSweet(){
+  event.preventDefault();
+  var href = $('#closeTicket').prop("href");
+  Swal.fire({
+    title: 'Finalizar',
+    text: 'Deseja finalizar o ticket ? Ele não poderá ser aberto novamente !',
+    showDenyButton: true,
+    confirmButtonText: `Sim`,
+    denyButtonText: `Cancelar`,
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    Swal.fire('Ticket fechado !', '', 'success').then(function() {
+      window.location = href;
+    })
+  } else if (result.isDenied) {
+    
+  }
+})
+}
+</script>
 
 {% endblock script %}

@@ -83,6 +83,7 @@ def operadorHome(request, username):
     context = {'all_operators': all_operators }
     return render(request, 'templates/admin/adminOperators.html', context)
 
+
 def addOperators(request, username):
     if request.method == 'POST':
         form = AddOperator(request.POST)

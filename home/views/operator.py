@@ -37,18 +37,27 @@ def homeOperator(request, username):
 
 @login_required
 def openTicket(request, id):
-    ticket = Tickets.objects.filter(id=id).first()
+    ticket = Tickets.objects.get(id=id)
     swal.success(request, title='Aberto', text="O Ticket agora está em andamento")
     ticket.status = 'Em andamento'
     ticket.operator = request.user
-    ticket.operator_receive_date = timezone.now()
+    ticket.operator_receive_date = timezone.localtime(timezone.now())
+    ticket.save()
+    return redirect('homeOperator', username=request.user.first_name )
+
+
+@login_required
+def closeTicket(request, id):
+    ticket = Tickets.objects.get(id=id)
+    ticket.status = 'Finalizado'
+    ticket.ended_in = timezone.localtime(timezone.now())
     ticket.save()
     return redirect('homeOperator', username=request.user.first_name )
 
 
 @login_required
 def verTicketOperator(request, id):
-    ticket = Tickets.objects.filter(id=id).first()
+    ticket = Tickets.objects.get(id=id)
     replies = Reply.objects.filter(ticket_id=id)
     form = ReplyForm()
     if request.method == 'POST':

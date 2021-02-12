@@ -6,7 +6,8 @@ from . import views
 urlpatterns = [
     path('<str:username>/PaginaInicial', views.homePage, name='home'),
     path('Operador/<str:username>/', views.homeOperator, name='homeOperator'),
-    path('Operador/AbrirTicket<int:id>', views.openTicket, name='openTicket'),
+    path('Operador/AbrirTicket/id=<int:id>', views.openTicket, name='openTicket'),
+    path('Operador/FecharTicket/id=<int:id>', views.closeTicket, name='closeTicket'),
     path('<str:username>/novoticket', views.novoTicket, name='novoTicket'),
     path('DeleteTicket/<int:id>', views.deleteTicket, name='deleteticket'),
     path('EditTicket/<int:id>', views.editTicket, name='editticket'),

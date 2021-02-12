@@ -57,7 +57,7 @@ def deleteTicket(request, id):
     O ticket em si é inativado e não excluido.
     '''
     try:
-        ticket = Tickets.objects.filter(id=id).first()
+        ticket = Tickets.objects.get(id=id)
         if ticket.created_by == request.user:
             ticket.is_active = False
             ticket.save()
@@ -71,7 +71,7 @@ def editTicket(request, id):
     '''
     100%
     '''
-    ticket = Tickets.objects.filter(id=id).first()
+    ticket = Tickets.objects.get(id=id)
     form = EditTicket(instance=ticket)
     if request.method == 'POST':
         form = EditTicket(request.POST, request.FILES, instance=ticket)
@@ -86,7 +86,7 @@ def editTicket(request, id):
 
 @login_required
 def verTicket(request, id):
-    ticket = Tickets.objects.filter(id=id).first()
+    ticket = Tickets.objects.get(id=id)
     replies = Reply.objects.filter(ticket_id=id)
     form = ReplyForm()
     if request.method == 'POST':
