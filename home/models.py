@@ -33,7 +33,7 @@ class Tickets(models.Model):
         ('Em andamento', 'Em andamento'),
         ('Finalizado', 'Finalizado'),
         ('Pendente', 'Pendente'),
-        )
+    )
 
     sort = models.ForeignKey(TicketType, null=True, on_delete=models.CASCADE)
     sector = models.ForeignKey(SectorType, null=True, on_delete=models.CASCADE)
@@ -51,10 +51,19 @@ class Tickets(models.Model):
     is_active = models.BooleanField(default=True)
 
 
-
 class Reply(models.Model):
     text = models.TextField()
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
     ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, null=True)
 
+
+class Notification(models.Model):
+    date  = models.DateTimeField(auto_now_add=True, null=True)
+    viwed = models.BooleanField(default=False)
+    text  = models.TextField()
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, null=True)
+    
+    
+    

@@ -74,6 +74,7 @@
     </button>
     <div class="form-inline ml-auto" id="navbarNavDropdown">
       <ul class="navbar-nav">
+
       <!-- Admin NAVBAR -->
       {% if user.is_admin %}
 	  <li class="nav-item dropdown">        
@@ -102,6 +103,7 @@
         </a>
       </li>
       <li class="nav-item dropdown">
+        <span class="badge badge-info">Info</span>
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{user.first_name}} {{user.last_name}}
         </a>
@@ -123,6 +125,14 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{% url 'novoTicket' username=user.first_name %}">Abrir Novo Ticket</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Notificações <span class="badge badge-info">{{ user.first_name }}</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <h2> include notifications nav.html </h2>
         </div>
       </li>
       <li class="nav-item dropdown">
