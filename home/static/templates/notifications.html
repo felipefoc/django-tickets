@@ -1,0 +1,12 @@
+<div class="container">
+    <table class="table">
+        <tbody>
+            {% for notify in notification %}
+            <tr>
+                <td><p>{{notify.text}}</p></td>
+                <td><small>{{notify.date|date:'d-m H:i'}}</small></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

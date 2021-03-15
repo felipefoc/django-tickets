@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from ..models import Tickets, Reply
+from ..models import Tickets, Reply, Notification
 from ..forms import NewTicket, EditTicket, TicketForm, ReplyForm
 from django.conf import settings
+from django.template.response import TemplateResponse
 
 
 @login_required
@@ -24,13 +25,13 @@ def homePage(request, username):
         elif t.status == "Finalizado":
             table_closed.append(t)
 
+
     context = {
-        "user" : request.user, 
         "table_open": table_open, 
         "table_outdated": table_outdated, 
         "table_closed": table_closed,
         }
-    return render(request, 'templates/home.html', context)
+    return TemplateResponse(request, 'templates/home.html', context)
 
 
 @login_required
@@ -41,12 +42,13 @@ def novoTicket(request, username):
             new_form = form.save(commit=False)
             new_form.created_by = request.user
             new_form.save()
-            return redirect('home', username=request.user.first_name)
+            return redirect('home', username=request.user.first_name, notification=notifications)
     else:
         form = NewTicket()   
 
-    context = {'user' : request.user,
-                'form' : form }
+    context = {
+        'form' : form
+            }
     return render(request, 'templates/novoticket.html', context)
 
 
@@ -78,8 +80,8 @@ def editTicket(request, id):
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.save()
-            return redirect('home', username=request.user.first_name )
-    context = {'user' : request.user,
+            return redirect('home', username=request.user.first_name, notification=notifications )
+    context = {
                'form' : form }
     return render(request, 'templates/editticket.html', context)
 
@@ -98,5 +100,6 @@ def verTicket(request, id):
             forms.save()
     context = {'ticket': ticket,
                'replies': replies,
-               'form': form,}
+               'form': form,
+    }
     return render(request, 'templates/verticket.html', context)

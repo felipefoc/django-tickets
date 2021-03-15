@@ -22,4 +22,8 @@ urlpatterns = [
     path('<str:username>_ADMIN/Operadores', views.operadorHome, name='operadorHome'),
     path('<str:username>_ADMIN/Operadores/AdicionarOperador', views.addOperators, name='addOperators'),
     path('RemoverOperador/<int:id>', views.removeOperator, name='removeOperator'),
+
+
+    # API
+    path('api_createRandomUser/', views.api_createRandomUser, name='api_createRandomUser'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

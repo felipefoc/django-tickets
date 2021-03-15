@@ -98,7 +98,7 @@ h6 {
     <li class="list-group-item"><h4>Arquivos Anexados :</h4><br> 
     <li class="list-group-item"><a href="media/{{ticket.files}}" 
                                    target="_blank"
-                                   data-toggle="tooltip" title="Abrir">
+                                   data-tippy-content="Abrir">
         <img id="file" src="media/{{ticket.files}}"></li></a>
     {% endif %}
     <li class="list-group-item">Status : <span class="badge badge-primary">{{ticket.status}}</span></li>
@@ -107,13 +107,12 @@ h6 {
   <div class="card-body">
     Ações <br>
     <a href="{% url 'deleteticket' id=ticket.id %}" 
-    data-toggle="tooltip" 
-    title="Excluir Ticket"
+    data-tippy-content="Excluir Ticket"
     onclick="fireSweet()"
     id="href">
           <i class="fas fa-window-close fa-lg">
     </i></a>
-    <a href="{% url 'editticket' id=ticket.id %}" data-toggle="tooltip" title="Editar Ticket">
+    <a href="{% url 'editticket' id=ticket.id %}" data-tippy-content="Editar Ticket">
           <i class="fas fa-edit fa-lg">
     </i></a>
 

@@ -3,8 +3,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-
-
 from ..forms import CreateSector, EditTicket, NewTicket, ReplyForm, TicketForm, CreateType, AddOperator
 from ..models import Reply, SectorType, Tickets, TicketType
 
@@ -107,3 +105,35 @@ def removeOperator(request, id):
     username = request.user.first_name
     return redirect('addOperators', username=username)
     
+
+
+
+"""
+Testando criação de api
+"""
+
+
+def api_createRandomUser(request):
+    if request.method == 'GET':
+        import requests
+        import json
+        from django.http import JsonResponse
+        from random import randint
+
+        r = requests.get('https://randomuser.me/api/')
+
+        r = r.json()
+
+        f_name = r['results'][0]['name']['first']
+        l_name = r['results'][0]['name']['last']
+        email = r['results'][0]['email']
+        password = r['results'][0]['login']['password'].capitalize() + '{}'.format(randint(10,20))
+
+        response = {'f_name' : f_name,
+                    'l_name' : l_name,
+                    'email' : email,
+                    'password' : password}
+
+        return JsonResponse(response)
+    else:
+        pass
