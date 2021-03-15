@@ -20,7 +20,7 @@ class NotificationAndUserMiddleware:
         return response
 
     def process_template_response(self, request, response):
-        self.notification = Notification.objects.filter(owner=request.user)
+        self.notification = Notification.objects.filter(owner=request.user).order_by('-date')
         self.user = request.user
         
         response.context_data["notification"] = self.notification

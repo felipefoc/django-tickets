@@ -60,7 +60,7 @@ class Reply(models.Model):
 
 class Notification(models.Model):
     date  = models.DateTimeField(auto_now_add=True, null=True)
-    viwed = models.BooleanField(default=False)
+    viewed = models.BooleanField(default=False)
     text  = models.TextField()
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, null=True)

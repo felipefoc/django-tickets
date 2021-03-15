@@ -42,7 +42,7 @@ def novoTicket(request, username):
             new_form = form.save(commit=False)
             new_form.created_by = request.user
             new_form.save()
-            return redirect('home', username=request.user.first_name, notification=notifications)
+            return redirect('home', username=request.user.first_name)
     else:
         form = NewTicket()   
 
@@ -80,9 +80,10 @@ def editTicket(request, id):
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.save()
-            return redirect('home', username=request.user.first_name, notification=notifications )
+            return redirect('home', username=request.user.first_name)
     context = {
-               'form' : form }
+               'form' : form 
+            }
     return render(request, 'templates/editticket.html', context)
 
 
@@ -90,6 +91,7 @@ def editTicket(request, id):
 def verTicket(request, id):
     ticket = Tickets.objects.get(id=id)
     replies = Reply.objects.filter(ticket_id=id)
+    
     form = ReplyForm()
     if request.method == 'POST':
         form = ReplyForm(request.POST)
@@ -98,6 +100,8 @@ def verTicket(request, id):
             forms.ticket_id = id
             forms.owner_id = request.user.id
             forms.save()
+            
+
     context = {'ticket': ticket,
                'replies': replies,
                'form': form,

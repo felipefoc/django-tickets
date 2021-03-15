@@ -104,7 +104,7 @@ class AddOperator(forms.Form):
             user_exists = Account.objects.filter(pk=pk).first()
             if user_exists and user_exists.is_admin == True:
                 valid = False
-                self.add_error('operators', 'DEU RUIM')
+                self.add_error('operators', "Doesn't exists")
             return pk
 
-    
+

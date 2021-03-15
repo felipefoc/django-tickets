@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from ..models import Tickets, Reply
+from ..models import Tickets, Reply, Notification
 from ..forms import NewTicket, EditTicket, TicketForm, ReplyForm
 from django.conf import settings
 from django.utils import timezone
@@ -43,6 +43,15 @@ def openTicket(request, id):
     ticket.operator = request.user
     ticket.operator_receive_date = timezone.localtime(timezone.now())
     ticket.save()
+
+    notification = Notification.objects.create(
+        text = 'Ticket de número {} foi aberto.'.format(ticket.id),
+        ticket = ticket,
+        owner = ticket.created_by
+    )
+    notification.save()
+
+
     return redirect('homeOperator', username=request.user.first_name )
 
 
@@ -52,6 +61,15 @@ def closeTicket(request, id):
     ticket.status = 'Finalizado'
     ticket.ended_in = timezone.localtime(timezone.now())
     ticket.save()
+
+    notification = Notification.objects.create(
+        text = 'Ticket de número {} foi fechado pelo operador {}.'.format(ticket.id,
+                                                                    ticket.operator),
+        ticket = ticket,
+        owner = ticket.created_by
+    )
+    notification.save()
+
     return redirect('homeOperator', username=request.user.first_name )
 
 
@@ -67,6 +85,14 @@ def verTicketOperator(request, id):
             forms.ticket_id = id
             forms.owner_id = request.user.id
             forms.save()
+
+            notification = Notification.objects.create(
+                text = 'Nova resposta para o ticket {}.'.format(ticket.id),
+                ticket = ticket,
+                owner = ticket.created_by
+            )
+            notification.save()
+            
     context = {'ticket': ticket,
                'replies': replies,
                'form': form,}
