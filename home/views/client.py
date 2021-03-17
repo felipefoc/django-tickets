@@ -33,6 +33,15 @@ def homePage(request, username):
         }
     return TemplateResponse(request, 'templates/home.html', context)
 
+@login_required
+def viewedTicket(request, id):
+    instance = Notification()
+    instance.markasread(id)
+    ticket = Notification.objects.get(id=id)
+    ticket_id = ticket.ticket.id
+    return redirect('ticket', id=ticket_id)
+    
+
 
 @login_required
 def novoTicket(request, username):
@@ -105,5 +114,5 @@ def verTicket(request, id):
     context = {'ticket': ticket,
                'replies': replies,
                'form': form,
-    }
+        }
     return render(request, 'templates/verticket.html', context)

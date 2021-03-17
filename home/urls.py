@@ -22,6 +22,7 @@ urlpatterns = [
     path('<str:username>_ADMIN/Operadores', views.operadorHome, name='operadorHome'),
     path('<str:username>_ADMIN/Operadores/AdicionarOperador', views.addOperators, name='addOperators'),
     path('RemoverOperador/<int:id>', views.removeOperator, name='removeOperator'),
+    path('notify_ticket/<int:id>', views.viewedTicket, name='notify_ticket'),
 
 
     # API

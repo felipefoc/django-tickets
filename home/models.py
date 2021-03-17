@@ -65,5 +65,11 @@ class Notification(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, null=True)
     
+    def markasread(self, id):
+        n = Notification.objects.get(id=id)
+        n.viewed = True
+        print(n.viewed)
+        return n.save()
+
     
     

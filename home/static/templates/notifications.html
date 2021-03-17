@@ -3,7 +3,7 @@
         <tbody>
             {% for notify in notification %}
             <tr>
-                <td><a href="{% url 'ticket' id=notify.ticket.id %}"><p>{{notify.text}}</p></a></td>
+                <td><a href="{% url 'notify_ticket' id=notify.id %}"><p>{{notify.text}}</p></a></td>
                 <td><small>{{notify.date|date:'d-m H:i'}}</small></td>
             </tr>
             {% endfor %}
