@@ -65,6 +65,10 @@ class Notification(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, null=True)
     
+    class NotificationManagers(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset()
+            
     def get_all(self, user):
         queryset = self.__class__.objects.filter(owner=user)
         return queryset.order_by('-date')[:15]

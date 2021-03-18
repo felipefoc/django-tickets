@@ -1,13 +1,33 @@
 {% extends 'templates/base.html' %}
 
 {% block title %}
+{{ user.first_name }} - Notificações
+{% endblock %}
+
+{% block css %}
+#table1 {
+    background-color: white;
+    border-radius: 15px;
+}
+tr {
+    color: black;
+    text-align: initial;
+    position: relative;
+    top: 10px;
+}
 {% endblock %}
 
 
 {% block content %}
-{% for i in notifications %}
-<p>{{ i.id }} - {{ i.text }}</p>
-{% endfor %}
+<table class="table table-hover" id="table1">
+    <tbody>
+    {% for i in notifications %}
+      <tr>
+        <td><p>{{ i.id }} - {{ i.text }}</p></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}
 
 
