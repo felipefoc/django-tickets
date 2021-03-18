@@ -35,10 +35,11 @@ def homePage(request, username):
 
 @login_required
 def viewedTicket(request, id):
-    instance = Notification()
-    instance.markasread(id)
+    instance = Notification.objects.get(id=id)
+    instance.mark_as_read()
     ticket = Notification.objects.get(id=id)
     ticket_id = ticket.ticket.id
+    Notification.turn_all_off()
     return redirect('ticket', id=ticket_id)
     
 
@@ -58,7 +59,17 @@ def novoTicket(request, username):
     context = {
         'form' : form
             }
-    return render(request, 'templates/novoticket.html', context)
+    return TemplateResponse(request, 'templates/novoticket.html', context)
+
+
+# Rever esse código
+@login_required
+def all_tickets(request, username):
+    notifications = Notification()
+    context = {
+        'notifications': notifications.get_all(request.user),
+    }
+    return TemplateResponse(request, 'templates/all_tickets.html', context)
 
 
 ## Tickets Api's ##
@@ -93,7 +104,7 @@ def editTicket(request, id):
     context = {
                'form' : form 
             }
-    return render(request, 'templates/editticket.html', context)
+    return TemplateResponse(request, 'templates/editticket.html', context)
 
 
 @login_required
@@ -113,6 +124,6 @@ def verTicket(request, id):
 
     context = {'ticket': ticket,
                'replies': replies,
-               'form': form,
+               'form': form
         }
-    return render(request, 'templates/verticket.html', context)
+    return TemplateResponse(request, 'templates/verticket.html', context)

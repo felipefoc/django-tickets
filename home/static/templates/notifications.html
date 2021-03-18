@@ -9,5 +9,5 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="#"><p>Ver todas as notificações</p></a>
+    <a href="{% url 'all_tickets' username=user.first_name %}"><p>Ver todas as notificações</p></a>
 </div>

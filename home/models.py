@@ -65,11 +65,12 @@ class Notification(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, null=True)
     
-    def markasread(self, id):
-        n = Notification.objects.get(id=id)
-        n.viewed = True
-        print(n.viewed)
-        return n.save()
+    def get_all(self, user):
+        queryset = self.__class__.objects.filter(owner=user)
+        return queryset.order_by('-date')[:15]
 
+    def mark_as_read(self):
+        self.viewed = True
+        return self.save()
     
     
