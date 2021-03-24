@@ -12,6 +12,12 @@
                     </a>
                 </td>
             </tr>
+            {% empty %}
+            <div class="container" id="NoNotification">
+                <h1>
+                    Você não possui nenhuma notifação!
+                </h1>
+            </div>
             {% endfor %}
         </tbody>
     </table>
