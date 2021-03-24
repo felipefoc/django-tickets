@@ -8,22 +8,57 @@
 #table1 {
     background-color: white;
     border-radius: 15px;
-}
-tr {
-    color: black;
     text-align: initial;
-    position: relative;
-    top: 10px;
+    border-top: hidden;
+    border-bottom: hidden;
 }
+
+#table1 td{
+    position: relative;
+    top: 8px;
+}
+
+tr:hover {
+  transition: 0.2s;
+  background-color: ghostwhite;  
+}
+#strong_all_tickets {
+  color: black;
+  display: inline-block;
+
+}
+a:hover {
+  text-decoration : none;
+}
+#smalldate {
+  float: right;
+  text-transform: uppercase;
+
+}
+#contentblock {
+  width:100%;
+  display: block ruby;
+  color: black;
+}
+
 {% endblock %}
 
 
 {% block content %}
-<table class="table table-hover" id="table1">
+<table class="table" id="table1">
     <tbody>
     {% for i in notifications %}
       <tr>
-        <td><p>{{ i.id }} - {{ i.text }}</p></td>
+          <td>
+            <a href="{% url 'notify_ticket' id=i.id %}">            
+              
+                <div id="contentblock">
+                  <p style="float: left;">{{ i.id }} - {{ i.text }}</p>
+                  <p class="badge badge-neutral" id="smalldate">Data :{{ i.date|date:' d/m' }} Hora: {{ i.date|date:'H:m' }} </p>
+                </div>
+            
+            </a>
+          </td>
       </tr>
     {% endfor %}
     </tbody>

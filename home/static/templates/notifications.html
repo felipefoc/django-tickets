@@ -1,10 +1,10 @@
 <div class="container">
-    <table class="table">
+    <table class="table" id="tablenotifications">
         <tbody>
             {% for notify in notification %}
             <tr>
                 <td><a href="{% url 'notify_ticket' id=notify.id %}"><p>{{notify.text}}</p></a></td>
-                <td><small>{{notify.date|date:'d-m H:i'}}</small></td>
+                <td><small>{{notify.date}}</small></td>
             </tr>
             {% endfor %}
         </tbody>

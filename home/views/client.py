@@ -39,7 +39,6 @@ def viewedTicket(request, id):
     instance.mark_as_read()
     ticket = Notification.objects.get(id=id)
     ticket_id = ticket.ticket.id
-    Notification.turn_all_off()
     return redirect('ticket', id=ticket_id)
     
 
