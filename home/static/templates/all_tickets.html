@@ -51,12 +51,10 @@ a:hover {
       <tr>
           <td>
             <a href="{% url 'notify_ticket' id=i.id %}">            
-              
                 <div id="contentblock">
                   <p style="float: left;">{{ i.id }} - {{ i.text }}</p>
                   <p class="badge badge-neutral" id="smalldate">Data :{{ i.date|date:' d/m' }} Hora: {{ i.date|date:'H:m' }} </p>
                 </div>
-            
             </a>
           </td>
       </tr>

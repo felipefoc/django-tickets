@@ -1,13 +1,21 @@
-<div class="container">
+<div class="wrapper_table">
     <table class="table" id="tablenotifications">
         <tbody>
             {% for notify in notification %}
-            <tr>
-                <td><a href="{% url 'notify_ticket' id=notify.id %}"><p>{{notify.text}}</p></a></td>
-                <td><small>{{notify.date}}</small></td>
+            <tr> 
+                <td>
+                    <a href="{% url 'notify_ticket' id=notify.id %}">          
+                        <div>
+                            <p class="notifications-text">{{notify.text}}</p><br><br>
+                            <small style="float: right;" class="badge badge-info">{{notify.date|timesince}} ATRÁS</small>
+                        </div>  
+                    </a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'all_tickets' username=user.first_name %}"><p>Ver todas as notificações</p></a>
+</div>
+<div style="text-align: center;">
+    <a href="{% url 'all_tickets' username=user.first_name %}"><p class="see">Ver todas as notificações</p></a>
 </div>

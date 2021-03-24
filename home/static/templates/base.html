@@ -28,9 +28,8 @@
   <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
   <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 
-  <style>{% block css %}{% endblock %}
-   
-  html, body,-{
+  <style> 
+  html, body, {
     width:100%;
     height:100%;
     margin:0;
@@ -58,10 +57,10 @@
     background-size: cover;
   }
   {% endif %}
-  .fade {
+.fade {
     z-index: auto;
-  }
-  .navbar p {
+}
+.navbar p {
     margin: 0;
     font-weight: lighter;
     font-size: small;
@@ -76,6 +75,39 @@
 #tablenotifications {
   width: 500px;
 }
+a {
+  font-weight: bolder;
+}
+.notifications-text{
+  float:left;
+  font-size: medium;
+}
+.wrapper_table {
+  width:500px; 
+  overflow-y: overlay; 
+  scrollbar-width: none;
+  position:relative;
+  height: 300px;
+  font: -webkit-small-control;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.wrapper_table::-webkit-scrollbar {
+  display: none;
+}
+.see {
+  margin: 15px;
+  width: 92%;
+  text-align: center;
+  text-transform: uppercase;
+  text-align: center !important;
+}
+.see:hover {
+  border: solid hsl(199, 96%, 39%) 1px;
+}
+ 
+{% block css %}
+{% endblock %}
+
   </style>
 </head>
 <body>
